@@ -2,6 +2,7 @@
 name = "blog"
 version = "0.1.0"
 edition = "2021"
+publish = true
 
 [dependencies]
 sycamore = "0.9.0-beta.3"
