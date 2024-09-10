@@ -17,7 +17,22 @@ jobs:
           targets: wasm32-unknown-unknown
 
       - name: install trunk
-        run: wget -qO- https://github.com/trunk-rs/trunk/releases/latest/download/trunk-aarch64-unknown-linux-gnu.tar.gz | tar -xzf-
+        run: >
+          wget -qO- https://github.com/trunk-rs/trunk/releases/latest/download/trunk-x86_64-unknown-linux-gnu.tar.gz | tar -xzf-
+          && sudo mv ./trunk /usr/bin/
+
+      - run: cargo generate-lockfile
+
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
 
       - run: trunk build --release
 
