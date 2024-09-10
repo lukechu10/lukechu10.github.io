@@ -6,3 +6,4 @@ publish = true
 
 [dependencies]
 sycamore = "0.9.0-beta.3"
+sycamore-router = "0.9.0-beta.3"
