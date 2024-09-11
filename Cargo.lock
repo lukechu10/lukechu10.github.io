@@ -21,9 +21,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5c6cb57a04249c6480766f7f7cef5467412af1490f8d1e243141daddada3264f"
 
 [[package]]
+name = "bitflags"
+version = "2.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b048fb63fd8b5923fc5aa7b340d8e156aec7ec02f0c78fa8a6ddc2613f6f71de"
+
+[[package]]
 name = "blog"
 version = "0.1.0"
 dependencies = [
+ "console_error_panic_hook",
+ "include_dir",
+ "mdsycx",
+ "serde",
  "sycamore",
  "sycamore-router",
 ]
@@ -47,10 +57,29 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
+name = "console_error_panic_hook"
+version = "0.1.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a06aeb73f470f66dcdbf7223caeebb85984942f22f1adb2a088cf9668146bbbc"
+dependencies = [
+ "cfg-if",
+ "wasm-bindgen",
+]
+
+[[package]]
 name = "equivalent"
 version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5443807d6dff69373d433ab9ef5378ad8df50ca6298caf15de6e52e24aaf54d5"
+
+[[package]]
+name = "getopts"
+version = "0.2.21"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "14dbbfd5c71d70241ecf9e6f13737f7b5ce823821063188d7e46c41d371eebd5"
+dependencies = [
+ "unicode-width",
+]
 
 [[package]]
 name = "getrandom"
@@ -83,6 +112,25 @@ dependencies = [
 ]
 
 [[package]]
+name = "include_dir"
+version = "0.7.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "923d117408f1e49d914f1a379a309cffe4f18c05cf4e3d12e613a15fc81bd0dd"
+dependencies = [
+ "include_dir_macros",
+]
+
+[[package]]
+name = "include_dir_macros"
+version = "0.7.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7cab85a7ed0bd5f0e76d93846e0147172bed2e2d3f859bcc33a8d9699cad1a75"
+dependencies = [
+ "proc-macro2",
+ "quote",
+]
+
+[[package]]
 name = "indexmap"
 version = "2.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -91,6 +139,12 @@ dependencies = [
  "equivalent",
  "hashbrown",
 ]
+
+[[package]]
+name = "itoa"
+version = "1.0.11"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "49f1f14873335454500d59611f1cf4a4b0f786f9ac11f4312a78e4cf2566695b"
 
 [[package]]
 name = "js-sys"
@@ -112,6 +166,32 @@ name = "log"
 version = "0.4.22"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a7a70ba024b9dc04c27ea2f0c0548feb474ec5c54bba33a7f72f873a39d07b24"
+
+[[package]]
+name = "mdsycx"
+version = "0.1.0"
+source = "git+https://github.com/lukechu10/mdsycx?rev=ca406d1#ca406d122407ac05b1e65ee9d6982b5e6022c092"
+dependencies = [
+ "mdsycx-macro",
+ "pulldown-cmark",
+ "quick-xml",
+ "serde",
+ "serde_yaml",
+ "sycamore",
+ "thiserror",
+ "web-sys",
+]
+
+[[package]]
+name = "mdsycx-macro"
+version = "0.1.0"
+source = "git+https://github.com/lukechu10/mdsycx?rev=ca406d1#ca406d122407ac05b1e65ee9d6982b5e6022c092"
+dependencies = [
+ "proc-macro-error",
+ "proc-macro2",
+ "quote",
+ "syn 1.0.109",
+]
 
 [[package]]
 name = "memchr"
@@ -157,12 +237,65 @@ dependencies = [
 ]
 
 [[package]]
+name = "proc-macro-error"
+version = "1.0.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "da25490ff9892aab3fcf7c36f08cfb902dd3e71ca0f9f9517bea02a73a5ce38c"
+dependencies = [
+ "proc-macro-error-attr",
+ "proc-macro2",
+ "quote",
+ "syn 1.0.109",
+ "version_check",
+]
+
+[[package]]
+name = "proc-macro-error-attr"
+version = "1.0.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a1be40180e52ecc98ad80b184934baf3d0d29f979574e439af5a55274b35f869"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "version_check",
+]
+
+[[package]]
 name = "proc-macro2"
 version = "1.0.86"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5e719e8df665df0d1c8fbfd238015744736151d4445ec0836b8e628aae103b77"
 dependencies = [
  "unicode-ident",
+]
+
+[[package]]
+name = "pulldown-cmark"
+version = "0.12.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "666f0f59e259aea2d72e6012290c09877a780935cc3c18b1ceded41f3890d59c"
+dependencies = [
+ "bitflags",
+ "getopts",
+ "memchr",
+ "pulldown-cmark-escape",
+ "serde",
+ "unicase",
+]
+
+[[package]]
+name = "pulldown-cmark-escape"
+version = "0.11.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "007d8adb5ddab6f8e3f491ac63566a7d5002cc7ed73901f72057943fa71ae1ae"
+
+[[package]]
+name = "quick-xml"
+version = "0.36.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "96a05e2e8efddfa51a84ca47cec303fac86c8541b686d37cac5efc0e094417bc"
+dependencies = [
+ "memchr",
 ]
 
 [[package]]
@@ -205,6 +338,45 @@ dependencies = [
 ]
 
 [[package]]
+name = "ryu"
+version = "1.0.18"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f3cb5ba0dc43242ce17de99c180e96db90b235b8a9fdc9543c96d2209116bd9f"
+
+[[package]]
+name = "serde"
+version = "1.0.210"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c8e3592472072e6e22e0a54d5904d9febf8508f65fb8552499a1abc7d1078c3a"
+dependencies = [
+ "serde_derive",
+]
+
+[[package]]
+name = "serde_derive"
+version = "1.0.210"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "243902eda00fad750862fc144cea25caca5e20d615af0a81bee94ca738f1df1f"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.77",
+]
+
+[[package]]
+name = "serde_yaml"
+version = "0.9.34+deprecated"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6a8b1a1a2ebf674015cc02edccce75287f1a0130d394307b36743c2f5d504b47"
+dependencies = [
+ "indexmap",
+ "itoa",
+ "ryu",
+ "serde",
+ "unsafe-libyaml",
+]
+
+[[package]]
 name = "slotmap"
 version = "1.0.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -222,8 +394,7 @@ checksum = "3c5e1a9a646d36c3599cd173a41282daf47c44583ad367b8e6837255952e5c67"
 [[package]]
 name = "sycamore"
 version = "0.9.0-beta.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dedaf7237c05913604a5b0b2536b613f6c8510c6b213d2583b1294869755cabd"
+source = "git+https://github.com/sycamore-rs/sycamore?rev=ba34877#ba34877bf5a0606fcd28ac33ff152dca5443d7ec"
 dependencies = [
  "hashbrown",
  "indexmap",
@@ -239,8 +410,7 @@ dependencies = [
 [[package]]
 name = "sycamore-core"
 version = "0.9.0-beta.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e5ddddc3d1bcb38c04ad55d2d1ab4f6a358e4daaeae0a0436892f1fade9fb31a"
+source = "git+https://github.com/sycamore-rs/sycamore?rev=ba34877#ba34877bf5a0606fcd28ac33ff152dca5443d7ec"
 dependencies = [
  "hashbrown",
  "paste",
@@ -250,22 +420,20 @@ dependencies = [
 [[package]]
 name = "sycamore-macro"
 version = "0.9.0-beta.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "77181c27cb753e86065308901871ccc7456fb19527b6a4ffacad3b63175ed014"
+source = "git+https://github.com/sycamore-rs/sycamore?rev=ba34877#ba34877bf5a0606fcd28ac33ff152dca5443d7ec"
 dependencies = [
  "once_cell",
  "proc-macro2",
  "quote",
  "rand",
  "sycamore-view-parser",
- "syn",
+ "syn 2.0.77",
 ]
 
 [[package]]
 name = "sycamore-reactive"
 version = "0.9.0-beta.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7aa6870203507c07e850687c0ccf528eb0f04240e3596bac9137007ffb6c50b1"
+source = "git+https://github.com/sycamore-rs/sycamore?rev=ba34877#ba34877bf5a0606fcd28ac33ff152dca5443d7ec"
 dependencies = [
  "paste",
  "slotmap",
@@ -293,26 +461,24 @@ dependencies = [
  "nom",
  "proc-macro2",
  "quote",
- "syn",
+ "syn 2.0.77",
  "unicode-xid",
 ]
 
 [[package]]
 name = "sycamore-view-parser"
 version = "0.9.0-beta.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a6144640af2eafffc68a92f3aacbbfaa21f7fd31906e2336fe304fd100fe226b"
+source = "git+https://github.com/sycamore-rs/sycamore?rev=ba34877#ba34877bf5a0606fcd28ac33ff152dca5443d7ec"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn",
+ "syn 2.0.77",
 ]
 
 [[package]]
 name = "sycamore-web"
 version = "0.9.0-beta.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bca93dcf1b1830bf1aac93508ed51babcda92c1d32d96067ab416d94e4b7c475"
+source = "git+https://github.com/sycamore-rs/sycamore?rev=ba34877#ba34877bf5a0606fcd28ac33ff152dca5443d7ec"
 dependencies = [
  "html-escape",
  "js-sys",
@@ -328,6 +494,17 @@ dependencies = [
 
 [[package]]
 name = "syn"
+version = "1.0.109"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "72b64191b275b66ffe2469e8af2c1cfe3bafa67b529ead792a6d0160888b4237"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "unicode-ident",
+]
+
+[[package]]
+name = "syn"
 version = "2.0.77"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9f35bcdf61fd8e7be6caf75f429fdca8beb3ed76584befb503b1569faee373ed"
@@ -338,16 +515,57 @@ dependencies = [
 ]
 
 [[package]]
+name = "thiserror"
+version = "1.0.63"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c0342370b38b6a11b6cc11d6a805569958d54cfa061a29969c3b5ce2ea405724"
+dependencies = [
+ "thiserror-impl",
+]
+
+[[package]]
+name = "thiserror-impl"
+version = "1.0.63"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a4558b58466b9ad7ca0f102865eccc95938dca1a74a856f2b57b6629050da261"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.77",
+]
+
+[[package]]
+name = "unicase"
+version = "2.7.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f7d2d4dafb69621809a81864c9c1b864479e1235c0dd4e199924b9742439ed89"
+dependencies = [
+ "version_check",
+]
+
+[[package]]
 name = "unicode-ident"
 version = "1.0.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3354b9ac3fae1ff6755cb6db53683adb661634f67557942dea4facebec0fee4b"
 
 [[package]]
+name = "unicode-width"
+version = "0.1.13"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0336d538f7abc86d282a4189614dfaa90810dfc2c6f6427eaf88e16311dd225d"
+
+[[package]]
 name = "unicode-xid"
 version = "0.2.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "229730647fbc343e3a80e463c1db7f78f3855d3f3739bee0dda773c9a037c90a"
+
+[[package]]
+name = "unsafe-libyaml"
+version = "0.2.11"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "673aac59facbab8a9007c7f6108d11f63b603f7cabff99fabf650fea5c32b861"
 
 [[package]]
 name = "utf8-width"
@@ -389,7 +607,7 @@ dependencies = [
  "once_cell",
  "proc-macro2",
  "quote",
- "syn",
+ "syn 2.0.77",
  "wasm-bindgen-shared",
 ]
 
@@ -411,7 +629,7 @@ checksum = "afc340c74d9005395cf9dd098506f7f44e38f2b4a21c6aaacf9a105ea5e1e836"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn",
+ "syn 2.0.77",
  "wasm-bindgen-backend",
  "wasm-bindgen-shared",
 ]
@@ -450,5 +668,5 @@ checksum = "fa4f8080344d4671fb4e831a13ad1e68092748387dfc4f55e356242fae12ce3e"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn",
+ "syn 2.0.77",
 ]
