@@ -7,10 +7,8 @@ publish = true
 [dependencies]
 console_error_panic_hook = "0.1.7"
 include_dir = "0.7.4"
-mdsycx = { git = "https://github.com/lukechu10/mdsycx", rev = "ca406d1" }
+mdsycx = { git = "https://github.com/lukechu10/mdsycx", rev = "eb1ac15" }
 serde = { version = "1.0.210", features = ["derive"] }
-sycamore = "0.9.0-beta.3"
-sycamore-router = "0.9.0-beta.3"
+sycamore = "0.9.0-beta.4"
+sycamore-router = "0.9.0-beta.4"
 
-[patch.crates-io]
-sycamore = { git = "https://github.com/sycamore-rs/sycamore", rev = "ba34877" }
