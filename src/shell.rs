@@ -5,7 +5,7 @@ use crate::Routes;
 #[component]
 pub fn Route(route: ReadSignal<Routes>) -> View {
     view! {
-        div(class="app flex flex-col min-h-screen text-slate-200 bg-slate-900") {
+        div(class="app flex flex-col min-h-screen text-slate-200 bg-slate-900 text-base") {
             Header()
             main(class="mt-6 mx-3 flex-grow") {
                 (match route.get_clone() {
@@ -31,7 +31,7 @@ pub fn Route(route: ReadSignal<Routes>) -> View {
 #[component]
 fn Header() -> View {
     view! {
-        header(class="p-2 border-b-2 border-slate-500 font-mono") {
+        header(class="p-2 border-b-2 border-slate-500 text-sm font-mono") {
             nav(class="flex flex-row justify-between items-center") {
                 div(class="self-start") {
                     a(class="hover:underline font-bold", href="/") { "$ cd /home/lukechu" }

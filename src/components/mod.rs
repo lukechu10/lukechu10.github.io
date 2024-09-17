@@ -16,7 +16,7 @@ pub fn ShowDate(date: PostDate) -> View {
 
 
     view! {
-        p(class="text-sm text-gray-400 -mt-1 font-sans") { (format!("{month} {day}, {year}")) }
+        p(class="text-sm text-gray-400 -mt-1 font-mono") { (format!("{month} {day}, {year}")) }
     }
 }
 
