@@ -54,8 +54,10 @@ static FILES: Dir<'_> = include_dir!("$CARGO_MANIFEST_DIR/posts");
 
 pub static POSTS: LazyLock<HashMap<String, ParseRes<PostMetadata>>> = LazyLock::new(|| {
     FILES
-        .files()
-        .map(|file| {
+        .find("**/*.mdx")
+        .unwrap()
+        .map(|dir| {
+            let file = dir.as_file().unwrap();
             let contents = file.contents_utf8().expect("file not utf8");
             let mut parse_res: ParseRes<PostMetadata> = mdsycx::parse(contents).expect("parse failed");
 

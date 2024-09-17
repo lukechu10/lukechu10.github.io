@@ -7,7 +7,7 @@ pub fn Route(route: ReadSignal<Routes>) -> View {
     view! {
         div(class="app flex flex-col min-h-screen text-slate-200 bg-slate-900") {
             Header()
-            main(class="mt-6 flex-grow") {
+            main(class="mt-6 mx-3 flex-grow") {
                 (match route.get_clone() {
                     Routes::Home => view! {
                         crate::pages::home::Home()
@@ -65,7 +65,9 @@ fn Footer() -> View {
 #[component]
 pub fn NotFound() -> View {
     view! {
-        h1 { "404 Not Found" }
-        p { "The page you are looking for does not exist." }
+        div(class="max-w-prose mx-auto") {
+            h1 { "404 Not Found" }
+            p { "The page you are looking for does not exist." }
+        }
     }
 }

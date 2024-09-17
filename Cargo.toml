@@ -6,7 +6,7 @@ publish = true
 
 [dependencies]
 console_error_panic_hook = "0.1.7"
-include_dir = "0.7.4"
+include_dir = { version="0.7.4", features=["glob"] }
 mdsycx = { git = "https://github.com/lukechu10/mdsycx", rev = "eb1ac15" }
 serde = { version = "1.0.210", features = ["derive"] }
 sycamore = "0.9.0-beta.4"
