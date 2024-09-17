@@ -31,7 +31,7 @@ pub fn Route(route: ReadSignal<Routes>) -> View {
 #[component]
 fn Header() -> View {
     view! {
-        header(class="p-2 border-b-2 border-slate-500 text-sm font-mono sm:px-5") {
+        header(class="p-2 border-b-2 border-slate-700 text-sm font-mono sm:px-5") {
             nav(class="flex flex-row justify-between items-center") {
                 div(class="self-start") {
                     a(class="hover:underline font-bold", href="/") { "$ cd /home/lukechu" }
@@ -48,7 +48,7 @@ fn Header() -> View {
 #[component]
 fn Footer() -> View {
     view! {
-        footer(class="p-2 border-t-2 border-slate-500 text-xs font-mono") {
+        footer(class="p-2 border-t-2 border-slate-700 text-xs font-mono") {
             div(class="flex flex-row justify-between") {
                 div { "© 2024 Luke Chu" }
                 div {
