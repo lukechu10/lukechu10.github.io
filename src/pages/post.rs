@@ -1,11 +1,11 @@
 use std::{collections::HashMap, sync::LazyLock};
 
 use include_dir::{include_dir, Dir};
-use mdsycx::ParseRes;
-use sycamore_hooks::window::use_title;
-use wasm_bindgen::prelude::*;
+use mdsycx::{ComponentMap, ParseRes};
 use serde::Deserialize;
 use sycamore::prelude::*;
+use sycamore_hooks::window::use_title;
+use wasm_bindgen::prelude::*;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct PostDate {
@@ -61,9 +61,16 @@ pub static POSTS: LazyLock<HashMap<String, ParseRes<PostMetadata>>> = LazyLock::
         .map(|dir| {
             let file = dir.as_file().unwrap();
             let contents = file.contents_utf8().expect("file not utf8");
-            let mut parse_res: ParseRes<PostMetadata> = mdsycx::parse(contents).expect("parse failed");
+            let mut parse_res: ParseRes<PostMetadata> =
+                mdsycx::parse(contents).expect("parse failed");
 
-            let filename = file.path().file_stem().unwrap().to_str().unwrap().to_string();
+            let filename = file
+                .path()
+                .file_stem()
+                .unwrap()
+                .to_str()
+                .unwrap()
+                .to_string();
             parse_res.front_matter.filename = filename.clone();
             (filename, parse_res)
         })
@@ -80,11 +87,17 @@ pub fn PostView(id: String) -> View {
     // Code highlighting.
     on_mount(highlightAll);
     use_title(&format!("{} - lukechu", post.front_matter.title));
+
+    let components = ComponentMap::new()
+        .with("Slide", crate::components::slides::Slide)
+        .with("SlideSegment", crate::components::slides::SlideSegment);
+
     view! {
         div(class="max-w-prose mx-auto") {
             crate::components::ShowDate(date=post.front_matter.date)
+
             div(class="post-content") {
-                mdsycx::MDSycX(body=post.body.clone())
+                mdsycx::MDSycX(body=post.body.clone(), components=components)
             }
         }
     }

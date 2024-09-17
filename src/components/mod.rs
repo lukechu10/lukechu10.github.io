@@ -1,3 +1,5 @@
+pub mod slides;
+
 use sycamore::prelude::*;
 
 use crate::pages::post::PostDate;
