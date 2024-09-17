@@ -10,6 +10,7 @@ include_dir = { version="0.7.4", features=["glob"] }
 mdsycx = { git = "https://github.com/lukechu10/mdsycx", rev = "eb1ac15" }
 serde = { version = "1.0.210", features = ["derive"] }
 sycamore = "0.9.0-beta.4"
+sycamore-hooks = { git = "https://github.com/lukechu10/sycamore-hooks", rev = "9cb3018" }
 sycamore-router = "0.9.0-beta.4"
 wasm-bindgen = "0.2.93"
 

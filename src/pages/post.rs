@@ -2,6 +2,7 @@ use std::{collections::HashMap, sync::LazyLock};
 
 use include_dir::{include_dir, Dir};
 use mdsycx::ParseRes;
+use sycamore_hooks::window::use_title;
 use wasm_bindgen::prelude::*;
 use serde::Deserialize;
 use sycamore::prelude::*;
@@ -25,7 +26,7 @@ impl Ord for PostDate {
 }
 
 /// Deserialize date in format "YYYY-MM-DD"
-fn deerialize_date<'de, D>(deserializer: D) -> Result<PostDate, D::Error>
+fn deserialize_date<'de, D>(deserializer: D) -> Result<PostDate, D::Error>
 where
     D: serde::Deserializer<'de>,
 {
@@ -41,7 +42,7 @@ where
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Deserialize)]
 pub struct PostMetadata {
     pub title: String,
-    #[serde(deserialize_with = "deerialize_date")]
+    #[serde(deserialize_with = "deserialize_date")]
     pub date: PostDate,
     pub desc: String,
     pub tags: Vec<String>,
@@ -76,9 +77,9 @@ pub fn PostView(id: String) -> View {
             crate::shell::NotFound()
         };
     };
-    on_mount(move || {
-        highlightAll();
-    });
+    // Code highlighting.
+    on_mount(highlightAll);
+    use_title(&format!("{} - lukechu", post.front_matter.title));
     view! {
         div(class="max-w-prose mx-auto") {
             crate::components::ShowDate(date=post.front_matter.date)
