@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    color-scheme: dark;
+  }
+
   @font-face {
     font-family: "Fira Code";
     src: url("/assets/fonts/FiraCode-VF.woff2") format("woff2");
