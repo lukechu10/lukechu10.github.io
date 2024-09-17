@@ -10,7 +10,7 @@ module.exports = {
 			mono: ["Fira Code", ...defaultTheme.fontFamily.mono],
 		},
 		fontSize: {
-			xs: "12px",
+			xs: "14px",
 			sm: "16px",
 			base: "20px",
 			lg: "24px",

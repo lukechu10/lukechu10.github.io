@@ -28,6 +28,16 @@ fn PostList() -> View {
                                 }
                             }
                             p { (post.desc.clone()) }
+                            div(class="text-xs text-gray-400 font-mono") {
+                                Indexed(
+                                    list=post.tags,
+                                    view=|tag| {
+                                        view! {
+                                            span { "#" (tag) }
+                                        }
+                                    }
+                                )
+                            }
                         }
                     }
                 }
