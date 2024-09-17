@@ -91,15 +91,15 @@
     }
 
     code {
-      @apply text-sm;
+      @apply !text-sm;
     }
 
     code:not(pre code) {
       @apply font-mono bg-gray-700 px-1.5 py-0.5 rounded;
     }
 
-    pre code {
-      @apply block bg-gray-800 p-4 rounded mb-4;
+    pre {
+      @apply block !bg-slate-800 p-4 rounded mb-4 !leading-snug !py-3 !px-5;
     }
 
     blockquote {

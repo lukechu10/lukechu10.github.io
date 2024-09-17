@@ -36,6 +36,7 @@ dependencies = [
  "serde",
  "sycamore",
  "sycamore-router",
+ "wasm-bindgen",
 ]
 
 [[package]]

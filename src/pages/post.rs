@@ -2,6 +2,7 @@ use std::{collections::HashMap, sync::LazyLock};
 
 use include_dir::{include_dir, Dir};
 use mdsycx::ParseRes;
+use wasm_bindgen::prelude::*;
 use serde::Deserialize;
 use sycamore::prelude::*;
 
@@ -75,6 +76,9 @@ pub fn PostView(id: String) -> View {
             crate::shell::NotFound()
         };
     };
+    on_mount(move || {
+        highlightAll();
+    });
     view! {
         div(class="max-w-prose mx-auto") {
             crate::components::ShowDate(date=post.front_matter.date)
@@ -83,4 +87,10 @@ pub fn PostView(id: String) -> View {
             }
         }
     }
+}
+
+#[wasm_bindgen]
+extern "C" {
+    #[wasm_bindgen(js_namespace = Prism)]
+    fn highlightAll();
 }
