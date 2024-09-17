@@ -53,9 +53,9 @@ fn Footer() -> View {
                 div { "© 2024 Luke Chu" }
                 div {
                     "Made with "
-                    a(href="https://rust-lang.org") { "Rust" }
+                    a(class="hover:underline", href="https://rust-lang.org") { "Rust" }
                     " and "
-                    a(href="https://github.com/sycamore-rs/sycamore") { "Sycamore" }
+                    a(class="hover:underline", href="https://github.com/sycamore-rs/sycamore") { "Sycamore" }
                 }
             }
         }
