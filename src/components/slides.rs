@@ -5,6 +5,21 @@ use std::str::FromStr;
 use mdsycx::FromMd;
 use sycamore::prelude::*;
 
+#[derive(Props, FromMd)]
+pub struct SlideShowProps {
+    pub children: Children,
+}
+
+#[component]
+pub fn SlideShow(props: SlideShowProps) -> View {
+    let children = props.children.call();
+    view! {
+        div(class="slide-show") {
+            (children)
+        }
+    }
+}
+
 /// Context state used to manage slides.
 #[derive(Debug, Default, Clone, Copy)]
 struct SlideState {

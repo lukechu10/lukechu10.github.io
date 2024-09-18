@@ -47,6 +47,10 @@ pub enum PostLayout {
     Full,
 }
 
+fn _render_math_default() -> bool {
+    false
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Deserialize)]
 pub struct PostMetadata {
     pub title: String,
@@ -56,6 +60,8 @@ pub struct PostMetadata {
     pub tags: Vec<String>,
     #[serde(default)]
     pub layout: PostLayout,
+    #[serde(default = "_render_math_default")]
+    pub render_math: bool,
     /// The filename of the original markdown file. This is not deserialized by serde but populated
     /// manually.
     #[serde(skip)]
@@ -98,9 +104,16 @@ pub fn PostView(id: String) -> View {
     on_mount(highlightAll);
     use_title(&format!("{} - lukechu", post.front_matter.title));
 
+    // TODO: Only import MathJax if needed.
+    if post.front_matter.render_math {
+        on_mount(typeset);
+    }
+
     let components = ComponentMap::new()
+        .with("SlideShow", crate::components::slides::SlideShow)
         .with("Slide", crate::components::slides::Slide)
-        .with("SlideSegment", crate::components::slides::SlideSegment);
+        .with("SlideSegment", crate::components::slides::SlideSegment)
+        .with("span", crate::components::math::MathDisplay);
 
     match post.front_matter.layout {
         PostLayout::Prose => view! {
@@ -126,4 +139,7 @@ pub fn PostView(id: String) -> View {
 extern "C" {
     #[wasm_bindgen(js_namespace = Prism)]
     fn highlightAll();
+
+    #[wasm_bindgen(js_namespace = MathJax)]
+    fn typeset();
 }
