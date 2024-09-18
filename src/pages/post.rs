@@ -39,6 +39,14 @@ where
     })
 }
 
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Hash, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum PostLayout {
+    #[default]
+    Prose,
+    Full,
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Deserialize)]
 pub struct PostMetadata {
     pub title: String,
@@ -46,6 +54,8 @@ pub struct PostMetadata {
     pub date: PostDate,
     pub desc: String,
     pub tags: Vec<String>,
+    #[serde(default)]
+    pub layout: PostLayout,
     /// The filename of the original markdown file. This is not deserialized by serde but populated
     /// manually.
     #[serde(skip)]
@@ -92,14 +102,23 @@ pub fn PostView(id: String) -> View {
         .with("Slide", crate::components::slides::Slide)
         .with("SlideSegment", crate::components::slides::SlideSegment);
 
-    view! {
-        div(class="max-w-prose mx-auto") {
-            crate::components::ShowDate(date=post.front_matter.date)
+    match post.front_matter.layout {
+        PostLayout::Prose => view! {
+            div(class="post-content max-w-prose mx-auto") {
+                crate::components::ShowDate(date=post.front_matter.date)
 
-            div(class="post-content") {
                 mdsycx::MDSycX(body=post.body.clone(), components=components)
             }
-        }
+        },
+        PostLayout::Full => view! {
+            div(class="post-content") {
+                div(class="max-w-prose mx-auto") {
+                    crate::components::ShowDate(date=post.front_matter.date)
+                }
+
+                mdsycx::MDSycX(body=post.body.clone(), components=components)
+            }
+        },
     }
 }
 

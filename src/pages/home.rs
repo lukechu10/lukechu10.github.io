@@ -11,7 +11,10 @@ pub fn Home() -> View {
 
 #[component]
 fn PostList() -> View {
-    let mut posts = POSTS.values().map(|x| x.front_matter.clone()).collect::<Vec<_>>();
+    let mut posts = POSTS
+        .values()
+        .map(|x| x.front_matter.clone())
+        .collect::<Vec<_>>();
     // Sort posts by date descending.
     posts.sort_by_key(|post| post.date);
     view! {

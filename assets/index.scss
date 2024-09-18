@@ -5,6 +5,7 @@
 @layer base {
   html {
     color-scheme: dark;
+    @apply font-serif;
   }
 
   @font-face {
@@ -71,17 +72,11 @@
     @apply text-lg font-mono text-red-100 mt-3 mb-1;
   }
 
-  p {
-    @apply font-serif;
-  }
-
   hr {
     @apply my-2;
   }
 
   .post-content {
-    @apply font-serif;
-
     h1 {
       @apply mb-4;
     }
@@ -95,7 +90,7 @@
     }
 
     code {
-      @apply !text-sm;
+      @apply  !text-sm;
     }
 
     code:not(pre code) {

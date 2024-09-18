@@ -3,42 +3,62 @@ title: Low Energy Transfers in Space
 date: 2024-09-17
 desc: Using the Interplanetary Transport Network to perform low energy transfers in space.
 tags: [physics]
+layout: full
 ---
-
-# Low Energy Transfers in Space
 
 <Slide>
   <SlideSegment>
+
+# Low Energy Transfers in Space
+
 Suppose you want to get to the Moon and that you are currently sitting in
 Low Earth Orbit. Your plan is to make two burns. The first one to reach the
 Moon, the second one to slow down so that you get captured instead of flying
 off into deep space. But as you check your fuel supplies, you realize that
 because of a mistake, you don’t have enough fuel to perform the second burn.
 Is there still a way to get to the Moon?
+
   </SlideSegment>
 
-  <SlideSegment>
-It turns out in fact that there is! Instead of taking a direct path, we can
-use a so-called low-energy transfer that removes the need for a second burn.
-Our goal today will be to find this low-energy transfer and explain how it
-arises. To do so, we’ll start off by building a path tracer. With this, we
-will investigate the curious properties of Lagrange points and how these
-arise to various manifolds which describe the structure of motion. Let’s get
-started!
-  </SlideSegment>
+<SlideSegment>
+  It turns out in fact that there is! Instead of taking a direct path, we can
+  use a so-called low-energy transfer that removes the need for a second burn.
+  Our goal today will be to find this low-energy transfer and explain how it
+  arises. To do so, we’ll start off by building a path tracer. With this, we
+  will investigate the curious properties of Lagrange points and how these arise
+  to various manifolds which describe the structure of motion. Let’s get
+  started!
+</SlideSegment>
+
 </Slide>
+
+---
+
+<Slide kind="split">
+<SlideSegment>
 
 ## The Reduced n-body Problem
 
 To find the most fuel efficient route from Earth to Moon, we need to predict the future. Given some initial configuration of the planets and our spaceship, we want to know where we will end up. Let’s start with a simple example.
 
+</SlideSegment>
+<SlideSegment>
+
 ### A Single Planet
 
 Here, we have a single planet and life is easy. Let’s give ourselves some initial velocity. And we get a nice circular orbit around our planet. If we now increase our initial velocity we get the usual Kepler orbits. First, we have the ellipse, then the parabola, and finally, the hyperbola.
 
+</SlideSegment>
+<SlideSegment>
+
 ### Multiple Planets
 
 Let’s consider a slightly more complicated setup. Here, we have our starship in a three planet system. Let’s see what happens this time. And our trajectory becomes a lot more complicated. Now comes the fun part. Let’s vary our initial velocity again. The system is chaotic! This simply means that a tiny change in initial conditions will dramatically change the outcome. This is a problem for us. In chaotic systems, it becomes basically impossible to predict where we will end up. However, not all starting conditions are chaotic. For instance, this one is not. This is a case where we can calculate accurate predictions. Our goal then, will be to find where these regions of stable motion exist and to exploit them to get to the moon.
+
+</SlideSegment>
+</Slide>
+
+<Slide>
 
 ## From LEO to the Moon
 
@@ -47,6 +67,10 @@ Let’s run our simulation a little longer and pay attention to the green trajec
 
 Let’s take a closer look at the trajectory. We start off in an elliptical orbit around Earth. But we don’t stick to it. Why not? Because of the Sun! The force from the Sun changes our orbit and lets us catch up to Moon.
 This is our low-energy ballistic capture trajectory. Now let’s try to explain where it comes from.
+
+</Slide>
+
+<Slide>
 
 ### Lagrange Points
 
@@ -59,15 +83,27 @@ Let’s draw a contour plot of our effective potential From this diagram, we see
 
 But one of the quite surprising things about Lagrange points is that you can in fact orbit around them. These are called Halo orbits. We will be interested especially by halo orbits around L1 and L2.
 
+</Slide>
+
+<Slide>
+
 ### Halo orbits
 
 This is completely unintuitive since there is of course no matter present at either L1 or L2 itself. So how can you orbit around nothing? Furthermore, looking at our contour plot, it seems like L1 and L2 are points of unstable equilibria. And that is because they are. But the reason why we have halo orbits is because of the Coriolis force. As we are falling off the top of the potential hill, we are pushed sideways by the Coriolis force. Given the right initial conditions, we can create periodic orbits. And from these periodic orbits, we obtain stable and unstable manifolds. What are these manifolds? Let’s consider a simpler system.
+
+</Slide>
+
+<Slide>
 
 ### Stable and unstable manifolds
 
 Here we have the potential function U as a function of spatial position x and the corresponding phase space.
 
 Let’s shoot some rockets into the potential bump. What we obtain is a phase-space diagram of our system. In fact, we find that there is a single equilibrium point right here which corresponds to sitting on the top of the hill. Our periodic orbit is not a point but imagine for now that it is. We can then draw stable and unstable manifolds for this point. ‘Stable’ and ‘unstable’ here don’t refer to stable or unstable equilibriums. Instead, they tell us where in phase space leads us to and away from our equilibrium. They also give us the structure of the phase space. If we shoot two rockets close to either side of the stable manifold, they will leave on opposite sides of the unstable manifolds.
+
+</Slide>
+
+<Slide>
 
 ### Sun-Earth stable and unstable manifolds
 
@@ -77,8 +113,14 @@ Well, this tube is only for the Sun-Earth system. We can also consider the restr
 
 In fact we can think of the Solar System as a collection of many restricted-3-body systems, each with its own set of manifold tubes. We can use a similar method to travel to virtually anywhere else in the Solar System forming what is called the interplanetary transport network.
 
+</Slide>
+
+<Slide>
+
 ### Ballistic Capture
 
 Going back to our ballistic capture trajectory, we see that this is indeed what happens. We follow the stable manifold tube leading to the L1 Lagrange point and falling back via the unstable manifold. We are however caught by the stable manifold from the Earth-Moon system which let’s us get captured by the Moon.
 
 If this is such a great way of travelling in space, why do we still use Hohmann transfers? Well, the biggest reason is time. A Hohmann transfer to get to the Moon takes a few days. The low-energy trajectory takes a few months. A Hohmann transfer from Earth to Mars takes a few months. A low-energy trajectory could take over a thousand years!
+
+</Slide>

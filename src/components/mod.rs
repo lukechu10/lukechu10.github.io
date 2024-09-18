@@ -16,9 +16,7 @@ pub fn ShowDate(date: PostDate) -> View {
 
     let year = date.year.to_string();
 
-
     view! {
-        p(class="text-sm text-gray-400 -mt-1 font-mono") { (format!("{month} {day}, {year}")) }
+        p(class="text-sm text-gray-400 -mt-1 !mb-0 font-mono") { (format!("{month} {day}, {year}")) }
     }
 }
-
