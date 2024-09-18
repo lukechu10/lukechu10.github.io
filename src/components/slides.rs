@@ -4,7 +4,7 @@ use mdsycx::FromMd;
 use sycamore::prelude::*;
 
 /// Context state used to manage slides.
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Default, Clone, Copy)]
 struct SlideState {
     current: Signal<usize>,
     total: Signal<usize>,
@@ -17,6 +17,8 @@ pub struct SlideProps {
 
 #[component]
 pub fn Slide(props: SlideProps) -> View {
+    provide_context(SlideState::default());
+
     let children = props.children.call();
     view! {
         div(class="slide") {
@@ -32,6 +34,10 @@ pub struct SlideSegmentProps {
 
 #[component]
 pub fn SlideSegment(props: SlideSegmentProps) -> View {
+    let mut state = use_context::<SlideState>();
+    // Register the slide segment.
+    state.total += 1;
+    
     let children = props.children.call();
     view! {
         div(class="slide-segment mb-4") {

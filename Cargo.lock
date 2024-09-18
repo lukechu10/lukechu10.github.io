@@ -274,7 +274,7 @@ checksum = "a7a70ba024b9dc04c27ea2f0c0548feb474ec5c54bba33a7f72f873a39d07b24"
 [[package]]
 name = "mdsycx"
 version = "0.1.0"
-source = "git+https://github.com/lukechu10/mdsycx?rev=eb1ac15#eb1ac153070e08d5bfe7e433d9e0467c90b383d2"
+source = "git+https://github.com/lukechu10/mdsycx?rev=ce8eb39#ce8eb398d4481a26507ac97a298bca1487fea864"
 dependencies = [
  "mdsycx-macro",
  "pulldown-cmark",
@@ -289,7 +289,7 @@ dependencies = [
 [[package]]
 name = "mdsycx-macro"
 version = "0.1.0"
-source = "git+https://github.com/lukechu10/mdsycx?rev=eb1ac15#eb1ac153070e08d5bfe7e433d9e0467c90b383d2"
+source = "git+https://github.com/lukechu10/mdsycx?rev=ce8eb39#ce8eb398d4481a26507ac97a298bca1487fea864"
 dependencies = [
  "proc-macro-error",
  "proc-macro2",
