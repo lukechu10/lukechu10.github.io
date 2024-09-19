@@ -122,7 +122,6 @@ pub fn PostView(id: String) -> View {
     let components = ComponentMap::new()
         .with("SlideShow", crate::components::slides::SlideShow)
         .with("Slide", crate::components::slides::Slide)
-        .with("SlideSegment", crate::components::slides::SlideSegment)
         .with("span", crate::components::math::MathDisplay)
         .with("ShowDate", crate::components::ShowDate);
 

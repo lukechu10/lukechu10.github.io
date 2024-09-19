@@ -10,14 +10,10 @@ use sycamore::prelude::*;
 struct SlideShowState {
     slides: Signal<Vec<SlideData>>,
     current_slide: Signal<usize>,
-    current_segment: Signal<usize>,
 }
 
 #[derive(Debug, Clone)]
-struct SlideData {
-    starts: Vec<NodeRef>,
-    segments: usize,
-}
+struct SlideData {}
 
 #[derive(Props, FromMd)]
 pub struct SlideShowProps {
@@ -72,21 +68,9 @@ pub struct SlideProps {
 pub fn Slide(props: SlideProps) -> View {
     // Register the slide.
     let state = use_context::<SlideShowState>();
-    state.slides.update(|slides| {
-        slides.push(SlideData {
-            starts: Vec::new(),
-            segments: 0,
-        })
-    });
+    state.slides.update(|slides| slides.push(SlideData {}));
 
     let children = props.children.call();
-
-    assert!(
-        state
-            .slides
-            .with(|slides| slides.last().unwrap().segments > 0),
-        "slide must have at least one segment"
-    );
 
     let slide_content = match props.kind {
         SlideKind::Text => view! {
@@ -116,41 +100,6 @@ pub fn Slide(props: SlideProps) -> View {
     }
 }
 
-#[derive(Props, FromMd)]
-pub struct SlideSegmentProps {
-    pub children: Children,
-}
-
-#[component]
-pub fn SlideSegment(props: SlideSegmentProps) -> View {
-    let start = create_node_ref();
-
-    // Register the slide segment.
-    let state = use_context::<SlideShowState>();
-    state.slides.update(|slides| {
-        let slide = slides.last_mut().expect("SlideSegment must be in Slide");
-        slide.segments += 1;
-        slide.starts.push(start);
-    });
-
-    let children = props.children.call();
-
-    let slide_number = state.slides.with(|slides| slides.len() - 1);
-    let segment_number = state
-        .slides
-        .with(|slides| slides[slide_number].segments - 1);
-    let show = move || {
-        state.current_slide.get() == slide_number && state.current_segment.get() == segment_number
-    };
-    let class = move || if show() { "mb-4" } else { "mb-4 hidden" };
-
-    view! {
-        div(class=class, r#ref=start) {
-            (children)
-        }
-    }
-}
-
 #[component]
 pub fn SlideGraphics() -> View {
     view! {
@@ -166,15 +115,8 @@ pub fn SlideGraphics() -> View {
 pub fn SlideControls() -> View {
     let mut state = use_context::<SlideShowState>();
 
-    let has_previous = move || state.current_slide.get() > 0 || state.current_segment.get() > 0;
-    let has_next = move || {
-        state.current_segment.get()
-            < state
-                .slides
-                .with(|slides| slides[state.current_slide.get()].segments)
-                - 1
-            || state.current_slide.get() < state.slides.with(Vec::len) - 1
-    };
+    let has_previous = move || state.current_slide.get() > 0;
+    let has_next = move || state.current_slide.get() < state.slides.with(Vec::len) - 1;
 
     let previous_class = move || {
         if has_previous() {
@@ -193,27 +135,11 @@ pub fn SlideControls() -> View {
 
     let previous = move |_| {
         assert!(has_previous());
-        if state.current_segment.get() > 0 {
-            state.current_segment -= 1;
-        } else {
-            state.current_slide -= 1;
-            state.current_segment.set(0);
-        }
+        state.current_slide -= 1;
     };
     let next = move |_| {
         assert!(has_next());
-        // Get next segment and scroll to it.
-        if state.current_segment.get()
-            < state
-                .slides
-                .with(|slides| slides[state.current_slide.get()].segments)
-                - 1
-        {
-            state.current_segment += 1;
-        } else {
-            state.current_slide += 1;
-            state.current_segment.set(0);
-        }
+        state.current_slide += 1;
     };
 
     view! {
