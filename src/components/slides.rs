@@ -27,25 +27,28 @@ pub struct SlideShowProps {
 
 #[component]
 pub fn SlideShow(props: SlideShowProps) -> View {
-    let mut children = View::new();
+    let mut view = View::default();
     create_child_scope(|| {
         provide_context(SlideShowState::default());
-        children = props.children.call();
-    });
-
-    on_mount(|| {
-        let body = document().body().unwrap();
-        body.class_list().add_1("overflow-hidden").unwrap();
-        on_cleanup(move || {
-            body.class_list().remove_1("overflow-hidden").unwrap();
+        let children = props.children.call();
+        on_mount(|| {
+            let body = document().body().unwrap();
+            body.class_list().add_1("overflow-hidden").unwrap();
+            on_cleanup(move || {
+                body.class_list().remove_1("overflow-hidden").unwrap();
+            });
         });
-    });
 
-    view! {
-        div(class="mb-[100vh]") {
-            (children)
+        view = view! {
+            div(class="mb-[100vh]") {
+                (children)
+            }
+            div(class="fixed bottom-0 left-0 bg-slate-950 w-full h-8 border-slate-700 border-t-2") {
+                SlideControls()
+            }
         }
-    }
+    });
+    view
 }
 
 #[derive(Debug, Default, Clone, Copy)]
@@ -95,25 +98,23 @@ pub fn Slide(props: SlideProps) -> View {
 
     let slide_content = match props.kind {
         SlideKind::Text => view! {
-            div(class="max-w-prose mx-auto min-h-screen") {
+            div(class="max-w-prose mx-auto") {
                 (children)
-                SlideControls()
             }
         },
         SlideKind::Split => view! {
-            div(class="grid grid-cols-2 gap-4 w-full min-h-screen content-center") {
-                div(class="max-w-prose ml-auto") {
+            div(class="grid grid-cols-2 gap-4 w-full content-center") {
+                div(class="max-w-prose ml-auto overflow-y-auto") {
                     (children)
                 }
                 div(class="sticky mt-5 top-5 max-w-prose h-fit") {
                     SlideGraphics()
-                    SlideControls()
                 }
             }
         },
     };
     view! {
-        div(class="slide mb-10") {
+        div(class="slide min-h-screen") {
             (slide_content)
         }
     }
@@ -138,8 +139,26 @@ pub fn SlideSegment(props: SlideSegmentProps) -> View {
 
     let children = props.children.call();
 
+    let slide_number = state.slides.with(|slides| slides.len() - 1);
+    let segment_number = state
+        .slides
+        .with(|slides| slides[slide_number].segments - 1);
+
+    let show = move || {
+        state.current_slide.get() > slide_number
+            || (state.current_slide.get() == slide_number
+                && state.current_segment.get() >= segment_number)
+    };
+    let class = move || {
+        if show() {
+            "slide-segment mb-4"
+        } else {
+            "slide-segment mb-4 invisible"
+        }
+    };
+
     view! {
-        div(class="slide-segment mb-4", r#ref=start) {
+        div(class=class, r#ref=start) {
             (children)
         }
     }
@@ -185,15 +204,15 @@ pub fn SlideControls() -> View {
         }
     };
 
-    let scroll_to_current = move || {
+    let scroll_to_current = move |scroll_behavior| {
         if state.current_slide.get() == 0 && state.current_segment.get() == 0 {
             let scroll_options = web_sys::ScrollToOptions::new();
             scroll_options.set_top(0.0);
-            scroll_options.set_behavior(web_sys::ScrollBehavior::Smooth);
+            scroll_options.set_behavior(scroll_behavior);
             window().scroll_to_with_scroll_to_options(&scroll_options);
         } else {
             let scroll_options = web_sys::ScrollIntoViewOptions::new();
-            scroll_options.set_behavior(web_sys::ScrollBehavior::Smooth);
+            scroll_options.set_behavior(scroll_behavior);
             let current_segment = state.slides.with(|slides| {
                 slides[state.current_slide.get()].starts[state.current_segment.get()]
             });
@@ -213,7 +232,7 @@ pub fn SlideControls() -> View {
             state.current_segment.set(0);
         }
 
-        scroll_to_current();
+        scroll_to_current(web_sys::ScrollBehavior::Instant);
     };
     let next = move |_| {
         assert!(has_next());
@@ -230,11 +249,11 @@ pub fn SlideControls() -> View {
             state.current_segment.set(0);
         }
 
-        scroll_to_current();
+        scroll_to_current(web_sys::ScrollBehavior::Smooth);
     };
 
     view! {
-        div(class="block mx-auto text-sm flex flex-row justify-center gap-10") {
+        div(class="block m-auto text-sm flex flex-row justify-center gap-10") {
             button(
                 class=previous_class,
                 on:click=previous,
