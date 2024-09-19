@@ -25,17 +25,15 @@ pub fn SlideShow(props: SlideShowProps) -> View {
     let mut view = View::default();
 
     // Prevent overflow on the body.
-    on_mount(move || {
-        let body = web_sys::window()
-            .unwrap()
-            .document()
-            .unwrap()
-            .body()
-            .unwrap();
-        body.class_list().add_1("overflow-hidden").unwrap();
-        on_cleanup(move || {
-            body.class_list().remove_1("overflow-hidden").unwrap();
-        });
+    let body = web_sys::window()
+        .unwrap()
+        .document()
+        .unwrap()
+        .body()
+        .unwrap();
+    body.class_list().add_1("overflow-hidden").unwrap();
+    on_cleanup(move || {
+        body.class_list().remove_1("overflow-hidden").unwrap();
     });
 
     create_child_scope(|| {
@@ -94,7 +92,7 @@ pub fn Slide(props: SlideProps) -> View {
             }
         },
         SlideKind::Split => view! {
-            div(class="grid grid-cols-2 gap-4 w-full content-center") {
+            div(class="grid grid-flow-row md:grid-flow-col md:grid-cols-2 gap-4 w-full content-center") {
                 div(class="max-w-prose ml-auto overflow-y-auto") {
                     (children)
                 }
@@ -124,10 +122,11 @@ pub fn Slide(props: SlideProps) -> View {
 
 #[component]
 pub fn SlideGraphics() -> View {
+    let state = use_context::<SlideShowState>();
     view! {
         div(class="aspect-video") {
             p(class="p-5 font-sans") {
-                "TODO: Video"
+                (state.current_slide.get() + 1) " / " (state.slides.with(Vec::len))
             }
         }
     }
