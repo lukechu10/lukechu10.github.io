@@ -4,7 +4,6 @@ use std::str::FromStr;
 
 use mdsycx::FromMd;
 use sycamore::prelude::*;
-use wasm_bindgen::prelude::*;
 
 /// Context state used to manage slides.
 #[derive(Debug, Default, Clone, Copy)]
@@ -31,19 +30,12 @@ pub fn SlideShow(props: SlideShowProps) -> View {
     create_child_scope(|| {
         provide_context(SlideShowState::default());
         let children = props.children.call();
-        on_mount(|| {
-            let body = document().body().unwrap();
-            body.class_list().add_1("overflow-hidden").unwrap();
-            on_cleanup(move || {
-                body.class_list().remove_1("overflow-hidden").unwrap();
-            });
-        });
 
         view = view! {
-            div(class="mb-[100vh]") {
+            div(class="slide") {
                 (children)
             }
-            div(class="fixed bottom-0 left-0 bg-slate-950 w-full h-8 border-slate-700 border-t-2") {
+            div(class="fixed bottom-0 left-0 bg-slate-950 w-full p-2 border-slate-700 border-t-2") {
                 SlideControls()
             }
         }
@@ -113,8 +105,12 @@ pub fn Slide(props: SlideProps) -> View {
             }
         },
     };
+
+    let slide_number = state.slides.with(|slides| slides.len() - 1);
+    let show = move || state.current_slide.get() == slide_number;
+    let class = move || if show() { "" } else { "hidden" };
     view! {
-        div(class="slide min-h-screen") {
+        div(class=class) {
             (slide_content)
         }
     }
@@ -143,19 +139,10 @@ pub fn SlideSegment(props: SlideSegmentProps) -> View {
     let segment_number = state
         .slides
         .with(|slides| slides[slide_number].segments - 1);
-
     let show = move || {
-        state.current_slide.get() > slide_number
-            || (state.current_slide.get() == slide_number
-                && state.current_segment.get() >= segment_number)
+        state.current_slide.get() == slide_number && state.current_segment.get() == segment_number
     };
-    let class = move || {
-        if show() {
-            "slide-segment mb-4"
-        } else {
-            "slide-segment mb-4 invisible"
-        }
-    };
+    let class = move || if show() { "mb-4" } else { "mb-4 hidden" };
 
     view! {
         div(class=class, r#ref=start) {
@@ -191,35 +178,16 @@ pub fn SlideControls() -> View {
 
     let previous_class = move || {
         if has_previous() {
-            "inline-block hover:underline transition-transform ease-in-out delay-50 hover:-translate-x-0.5"
+            "hover:underline transition-transform ease-in-out delay-50 hover:-translate-x-0.5"
         } else {
-            "hidden"
+            "text-gray-400"
         }
     };
     let next_class = move || {
         if has_next() {
-            "inline-block hover:underline transition-transform ease-in-out delay-50 hover:translate-x-0.5"
+            "hover:underline transition-transform ease-in-out delay-50 hover:translate-x-0.5"
         } else {
-            "hidden"
-        }
-    };
-
-    let scroll_to_current = move |scroll_behavior| {
-        if state.current_slide.get() == 0 && state.current_segment.get() == 0 {
-            let scroll_options = web_sys::ScrollToOptions::new();
-            scroll_options.set_top(0.0);
-            scroll_options.set_behavior(scroll_behavior);
-            window().scroll_to_with_scroll_to_options(&scroll_options);
-        } else {
-            let scroll_options = web_sys::ScrollIntoViewOptions::new();
-            scroll_options.set_behavior(scroll_behavior);
-            let current_segment = state.slides.with(|slides| {
-                slides[state.current_slide.get()].starts[state.current_segment.get()]
-            });
-            current_segment
-                .get()
-                .unchecked_into::<web_sys::Element>()
-                .scroll_into_view_with_scroll_into_view_options(&scroll_options);
+            "text-gray-400"
         }
     };
 
@@ -231,8 +199,6 @@ pub fn SlideControls() -> View {
             state.current_slide -= 1;
             state.current_segment.set(0);
         }
-
-        scroll_to_current(web_sys::ScrollBehavior::Instant);
     };
     let next = move |_| {
         assert!(has_next());
@@ -248,20 +214,20 @@ pub fn SlideControls() -> View {
             state.current_slide += 1;
             state.current_segment.set(0);
         }
-
-        scroll_to_current(web_sys::ScrollBehavior::Smooth);
     };
 
     view! {
         div(class="block m-auto text-sm flex flex-row justify-center gap-10") {
             button(
                 class=previous_class,
+                disabled=!has_previous(),
                 on:click=previous,
             ) {
                 "< Previous"
             }
             button(
                 class=next_class,
+                disabled=!has_next(),
                 on:click=next,
             ) {
                 "Next >"

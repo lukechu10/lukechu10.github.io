@@ -1,13 +1,21 @@
 pub mod math;
 pub mod slides;
 
+use std::str::FromStr;
+
+use mdsycx::FromMd;
 use sycamore::prelude::*;
 
 use crate::pages::post::PostDate;
 
+#[derive(Props, FromMd)]
+pub struct ShowDateProps {
+    pub date: PostDate,
+}
+
 /// Display date string
-#[component(inline_props)]
-pub fn ShowDate(date: PostDate) -> View {
+#[component]
+pub fn ShowDate(ShowDateProps { date }: ShowDateProps) -> View {
     let day = date.day.to_string();
 
     static MONTHS: &[&str] = &[

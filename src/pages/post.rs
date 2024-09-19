@@ -1,4 +1,6 @@
-use std::{collections::HashMap, sync::LazyLock};
+use std::collections::HashMap;
+use std::str::FromStr;
+use std::sync::LazyLock;
 
 use include_dir::{include_dir, Dir};
 use mdsycx::{ComponentMap, ParseRes};
@@ -7,7 +9,7 @@ use sycamore::prelude::*;
 use sycamore_hooks::window::use_title;
 use wasm_bindgen::prelude::*;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct PostDate {
     pub day: u32,
     pub month: u32,
@@ -25,18 +27,26 @@ impl Ord for PostDate {
     }
 }
 
+impl FromStr for PostDate {
+    type Err = &'static str;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let mut parts = s.split('-').map(|x| x.parse().unwrap());
+        Ok(PostDate {
+            year: parts.next().ok_or("could not parse year")?,
+            month: parts.next().ok_or("could not parse month")?,
+            day: parts.next().ok_or("could not parse date")?,
+        })
+    }
+}
+
 /// Deserialize date in format "YYYY-MM-DD"
 fn deserialize_date<'de, D>(deserializer: D) -> Result<PostDate, D::Error>
 where
     D: serde::Deserializer<'de>,
 {
     let s = String::deserialize(deserializer)?;
-    let mut parts = s.split('-').map(|x| x.parse().unwrap());
-    Ok(PostDate {
-        year: parts.next().unwrap(),
-        month: parts.next().unwrap(),
-        day: parts.next().unwrap(),
-    })
+    // TODO: error handling
+    Ok(PostDate::from_str(&s).unwrap())
 }
 
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Hash, Deserialize)]
@@ -113,7 +123,8 @@ pub fn PostView(id: String) -> View {
         .with("SlideShow", crate::components::slides::SlideShow)
         .with("Slide", crate::components::slides::Slide)
         .with("SlideSegment", crate::components::slides::SlideSegment)
-        .with("span", crate::components::math::MathDisplay);
+        .with("span", crate::components::math::MathDisplay)
+        .with("ShowDate", crate::components::ShowDate);
 
     match post.front_matter.layout {
         PostLayout::Prose => view! {
@@ -125,10 +136,6 @@ pub fn PostView(id: String) -> View {
         },
         PostLayout::Full => view! {
             div(class="post-content") {
-                div(class="max-w-prose mx-auto") {
-                    crate::components::ShowDate(date=post.front_matter.date)
-                }
-
                 mdsycx::MDSycX(body=post.body.clone(), components=components)
             }
         },
