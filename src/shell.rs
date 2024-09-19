@@ -31,7 +31,7 @@ pub fn Route(route: ReadSignal<Routes>) -> View {
 #[component]
 fn Header() -> View {
     view! {
-        header(class="p-2 border-b-2 border-slate-700 text-sm font-mono text-red-200 sm:px-5") {
+        header(class="z-50 p-2 bg-inherit border-b-2 border-slate-700 text-sm font-mono text-red-200 sm:px-5") {
             nav(class="flex flex-row justify-between items-center") {
                 div(class="self-start") {
                     a(class="hover:underline font-bold", href="/") { "$ cd /home/lukechu" }

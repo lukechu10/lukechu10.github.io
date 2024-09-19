@@ -23,6 +23,21 @@ pub struct SlideShowProps {
 #[component]
 pub fn SlideShow(props: SlideShowProps) -> View {
     let mut view = View::default();
+
+    // Prevent overflow on the body.
+    on_mount(move || {
+        let body = web_sys::window()
+            .unwrap()
+            .document()
+            .unwrap()
+            .body()
+            .unwrap();
+        body.class_list().add_1("overflow-hidden").unwrap();
+        on_cleanup(move || {
+            body.class_list().remove_1("overflow-hidden").unwrap();
+        });
+    });
+
     create_child_scope(|| {
         provide_context(SlideShowState::default());
         let children = props.children.call();
@@ -92,7 +107,14 @@ pub fn Slide(props: SlideProps) -> View {
 
     let slide_number = state.slides.with(|slides| slides.len() - 1);
     let show = move || state.current_slide.get() == slide_number;
-    let class = move || if show() { "" } else { "hidden" };
+    let class = "fixed top-0 left-0 px-3 py-20 h-full w-full overflow-y-auto overscroll-contain transition-opacity";
+    let class = move || {
+        if show() {
+            class.to_string()
+        } else {
+            format!("{class} opacity-0 invisible")
+        }
+    };
     view! {
         div(class=class) {
             (slide_content)
