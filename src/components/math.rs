@@ -15,17 +15,15 @@ pub fn MathDisplay(props: MathDisplayProps) -> View {
     let children = props.children.call();
     let class = props.class;
 
-    if class == "math math-display" {
-        view! {
-            span(class=class) {
-                "$$" (children) "$$"
-            }
-        }
-    } else {
-        view! {
-            span(class=class) {
-                (children)
-            }
+    let delimiters = match class.as_str() {
+        "math math-display" => ("$$", "$$"),
+        "math math-inline" => ("\\(", "\\)"),
+        _ => ("", ""),
+    };
+
+    view! {
+        span(class=class) {
+            (delimiters.0) (children) (delimiters.1)
         }
     }
 }

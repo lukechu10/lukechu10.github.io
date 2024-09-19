@@ -6,11 +6,11 @@ publish = true
 
 [dependencies]
 console_error_panic_hook = "0.1.7"
-include_dir = { version="0.7.4", features=["glob"] }
-mdsycx = { git = "https://github.com/lukechu10/mdsycx", rev = "ce8eb39" }
+include_dir = { version = "0.7.4", features = ["glob"] }
+mdsycx = { git = "https://github.com/lukechu10/mdsycx", rev = "05aea03" }
 serde = { version = "1.0.210", features = ["derive"] }
 sycamore = "0.9.0-beta.4"
 sycamore-hooks = { git = "https://github.com/lukechu10/sycamore-hooks", rev = "9cb3018" }
 sycamore-router = "0.9.0-beta.4"
 wasm-bindgen = "0.2.93"
-
+web-sys = "0.3.70"

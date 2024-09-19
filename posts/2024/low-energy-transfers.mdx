@@ -4,6 +4,7 @@ date: 2024-09-17
 desc: Using the Interplanetary Transport Network to perform low energy transfers in space.
 tags: [physics]
 layout: full
+render_math: true
 ---
 
 <SlideShow>
@@ -32,8 +33,6 @@ started!
 
 </SlideSegment>
 </Slide>
-
----
 
 <Slide kind="split">
 <SlideSegment>
@@ -77,7 +76,7 @@ This is our low-energy ballistic capture trajectory. Now let’s try to explain 
 
 Let’s consider just the Earth and Moon for now. Each body exerts a gravitational influence so they both have a gravitational potential energy. The Moon is also orbiting around the Earth. But for us, it will be simpler to consider the Moon as stationary. To compensate for this, we must introduce fictious forces.
 
-The centrifugal force is equal to ω^2 r so integrating, we get a “centrifugal potential” equal to 1\/2 ω^2 r^2. Intuitively, this makes some sense since the further we are away from the axis of rotation, the more we are flung outward by the centrifugal force.
+The centrifugal force is equal to $ω^2 r$ so integrating, we get a “centrifugal potential” equal to $\frac{1}{2} ω^2 r^2$. Intuitively, this makes some sense since the further we are away from the axis of rotation, the more we are flung outward by the centrifugal force.
 We can now add these two potentials into an effective potential. What about the Coriolis force? The Coriolis force is always perpendicular to the motion, so it doesn’t do any work. So we can safely ignore it for now.
 
 Let’s draw a contour plot of our effective potential From this diagram, we see that there are points of equilibrium. In fact, there are exactly five, which are called the Lagrange points Here, they are labelled L1 to L5. These points are special because if we were to sit there without moving, we could in principle stay there forever. But obviously a small nudge and we would fall right off.

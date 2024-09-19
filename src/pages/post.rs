@@ -106,7 +106,7 @@ pub fn PostView(id: String) -> View {
 
     // TODO: Only import MathJax if needed.
     if post.front_matter.render_math {
-        on_mount(typeset);
+        on_mount(move || MathJax().typeset());
     }
 
     let components = ComponentMap::new()
@@ -139,7 +139,20 @@ pub fn PostView(id: String) -> View {
 extern "C" {
     #[wasm_bindgen(js_namespace = Prism)]
     fn highlightAll();
+}
 
-    #[wasm_bindgen(js_namespace = MathJax)]
-    fn typeset();
+#[wasm_bindgen]
+extern "C" {
+    type MathJax;
+
+    #[wasm_bindgen(method)]
+    fn typeset(this: &MathJax);
+}
+
+#[allow(non_snake_case)]
+fn MathJax() -> MathJax {
+    window()
+        .get("MathJax")
+        .expect("could not get MathJax")
+        .unchecked_into()
 }

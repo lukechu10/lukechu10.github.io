@@ -60,20 +60,25 @@ pub fn Slide(props: SlideProps) -> View {
         children = props.children.call();
     });
 
-    match props.kind {
+    let slide_content = match props.kind {
         SlideKind::Text => view! {
-            div(class="slide max-w-prose mx-auto") {
+            div(class="max-w-prose mx-auto min-h-screen") {
                 (children)
             }
         },
         SlideKind::Split => view! {
-            div(class="slide grid grid-cols-2 gap-4 w-full") {
-                div {
+            div(class="grid grid-cols-2 gap-4 w-full min-h-screen content-center") {
+                div(class="max-w-prose ml-auto") {
                     (children)
                 }
                 SlideGraphics()
             }
         },
+    };
+    view! {
+        div(class="slide mb-10") {
+            (slide_content)
+        }
     }
 }
 
@@ -99,8 +104,10 @@ pub fn SlideSegment(props: SlideSegmentProps) -> View {
 #[component]
 pub fn SlideGraphics() -> View {
     view! {
-        div(class="slide-graphics aspect-video bg-slate-800 rounded-lg sticky mt-10 top-10") {
-            "Video goes here"
+        div(class="slide-graphics aspect-video max-w-prose bg-slate-800 rounded-lg sticky my-5 top-5") {
+            p(class="p-5 font-sans") {
+                "TODO: Video"
+            }
         }
     }
 }

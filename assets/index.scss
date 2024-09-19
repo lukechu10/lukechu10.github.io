@@ -138,5 +138,9 @@
     ol {
       @apply list-decimal list-inside mb-4 ml-6;
     }
+
+    mjx-container {
+      @apply inline-block;
+    }
   }
 }
