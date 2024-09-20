@@ -1,8 +1,6 @@
 pub mod math;
 pub mod slides;
 
-use std::str::FromStr;
-
 use mdsycx::FromMd;
 use sycamore::prelude::*;
 

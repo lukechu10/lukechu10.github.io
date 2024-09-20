@@ -10,10 +10,16 @@ use sycamore::prelude::*;
 struct SlideShowState {
     slides: Signal<Vec<SlideData>>,
     current_slide: Signal<usize>,
+    current_segment: Signal<usize>,
 }
 
 #[derive(Debug, Clone)]
-struct SlideData {}
+struct SlideData {
+    pub segments: Vec<SlideSegmentData>,
+}
+
+#[derive(Debug, Clone)]
+struct SlideSegmentData {}
 
 #[derive(Props, FromMd)]
 pub struct SlideShowProps {
@@ -82,9 +88,13 @@ pub struct SlideProps {
 pub fn Slide(props: SlideProps) -> View {
     // Register the slide.
     let state = use_context::<SlideShowState>();
-    state.slides.update(|slides| slides.push(SlideData {}));
+    let slide_number = state.slides.update(|slides| {
+        slides.push(SlideData {
+            segments: Vec::new(),
+        });
+        slides.len() - 1
+    });
 
-    let slide_number = state.slides.with(|slides| slides.len() - 1);
     let show = move || state.current_slide.get() == slide_number;
 
     let children = props.children.call();
@@ -125,6 +135,83 @@ pub fn Slide(props: SlideProps) -> View {
     view! {
         div(class=class) {
             (slide_content)
+        }
+    }
+}
+
+#[derive(Props, FromMd)]
+pub struct SlideSegmentProps {
+    pub children: Children,
+}
+
+#[component]
+pub fn SlideSegment(props: SlideSegmentProps) -> View {
+    // Register ths slide segment.
+    let state = use_context::<SlideShowState>();
+    let (slide_number, segment_number) = state.slides.update(|slides| {
+        let slide_number = slides.len() - 1;
+        let current_slide = slides
+            .last_mut()
+            .expect("SlideSegment must be nested under a Slide");
+        current_slide.segments.push(SlideSegmentData {});
+        (slide_number, current_slide.segments.len() - 1)
+    });
+
+    let show = move || {
+        state.current_slide.get() == slide_number && state.current_segment.get() >= segment_number
+    };
+    let class = "transition-opacity";
+    let class = move || {
+        if show() {
+            class.to_string()
+        } else {
+            format!("{class} opacity-0 invisible")
+        }
+    };
+
+    let children = props.children.call();
+
+    view! {
+        span(class=class) {
+            (children)
+        }
+    }
+}
+
+#[derive(Props, FromMd)]
+pub struct NextSegmentLinkProps {
+    pub children: Children,
+}
+
+#[component]
+pub fn NextSegmentLink(props: NextSegmentLinkProps) -> View {
+    let mut state = use_context::<SlideShowState>();
+    let (current_slide, current_segment) = state
+        .slides
+        .with(|slides| (slides.len() - 1, slides.last().unwrap().segments.len() - 1));
+
+    let active = move || {
+        state.current_slide.get() == current_slide && state.current_segment.get() == current_segment
+    };
+
+    let on_click = move |_| {
+        if active() {
+            state.current_segment += 1;
+        }
+    };
+
+    let class = move || {
+        if active() {
+            "hover:underline text-red-300 cursor-pointer"
+        } else {
+            "text-gray-400"
+        }
+    };
+
+    let children = props.children.call();
+    view! {
+        span(class=class, on:click=on_click) {
+            (children)
         }
     }
 }
@@ -178,10 +265,12 @@ pub fn SlideControls() -> View {
     let previous = move |_| {
         assert!(has_previous());
         state.current_slide -= 1;
+        state.current_segment.set(0);
     };
     let next = move |_| {
         assert!(has_next());
         state.current_slide += 1;
+        state.current_segment.set(0);
     };
 
     view! {
