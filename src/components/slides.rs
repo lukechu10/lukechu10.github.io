@@ -74,6 +74,7 @@ impl FromStr for SlideKind {
 #[derive(Props, FromMd)]
 pub struct SlideProps {
     pub kind: SlideKind,
+    pub video: String,
     pub children: Children,
 }
 
@@ -82,6 +83,9 @@ pub fn Slide(props: SlideProps) -> View {
     // Register the slide.
     let state = use_context::<SlideShowState>();
     state.slides.update(|slides| slides.push(SlideData {}));
+
+    let slide_number = state.slides.with(|slides| slides.len() - 1);
+    let show = move || state.current_slide.get() == slide_number;
 
     let children = props.children.call();
 
@@ -92,19 +96,24 @@ pub fn Slide(props: SlideProps) -> View {
             }
         },
         SlideKind::Split => view! {
-            div(class="grid grid-flow-row md:grid-flow-col md:grid-cols-2 gap-4 w-full content-center") {
-                div(class="max-w-prose ml-auto overflow-y-auto") {
+            div(class="grid grid-flow-row md:grid-flow-col md:grid-cols-2 md:content-center gap-4 w-full ") {
+                div(class="max-w-prose mx-auto md:mr-0 overflow-y-auto") {
                     (children)
                 }
-                div(class="sticky mt-5 top-5 max-w-prose h-fit") {
-                    SlideGraphics()
+                div(class="sticky mt-5 top-5 h-fit mx-auto md:ml-0") {
+                    (if show() {
+                        let video = props.video.clone();
+                        view! {
+                            SlideGraphics(video=video)
+                        }
+                    } else {
+                        view! {}
+                    })
                 }
             }
         },
     };
 
-    let slide_number = state.slides.with(|slides| slides.len() - 1);
-    let show = move || state.current_slide.get() == slide_number;
     let class = "fixed top-0 left-0 px-3 py-20 h-full w-full overflow-y-auto overscroll-contain transition-opacity";
     let class = move || {
         if show() {
@@ -120,14 +129,26 @@ pub fn Slide(props: SlideProps) -> View {
     }
 }
 
+#[derive(Props, FromMd)]
+pub struct SlideGraphicsProps {
+    pub video: String,
+}
+
 #[component]
-pub fn SlideGraphics() -> View {
-    let state = use_context::<SlideShowState>();
+pub fn SlideGraphics(props: SlideGraphicsProps) -> View {
+    let video_ref = create_node_ref();
     view! {
         div(class="aspect-video") {
-            p(class="p-5 font-sans") {
-                (state.current_slide.get() + 1) " / " (state.slides.with(Vec::len))
-            }
+            (if !props.video.is_empty() {
+                let video = props.video.clone();
+                view! {
+                    video(autoplay=true, r#ref=video_ref) {
+                        source(src=video, r#type="video/mp4")
+                    }
+                }
+            } else {
+                view! { "No video..." }
+            })
         }
     }
 }
