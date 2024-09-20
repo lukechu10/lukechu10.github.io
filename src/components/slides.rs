@@ -4,6 +4,7 @@ use std::str::FromStr;
 
 use mdsycx::FromMd;
 use sycamore::prelude::*;
+use wasm_bindgen::JsValue;
 
 /// Context state used to manage slides.
 #[derive(Debug, Default, Clone, Copy)]
@@ -43,7 +44,34 @@ pub fn SlideShow(props: SlideShowProps) -> View {
     });
 
     create_child_scope(|| {
-        provide_context(SlideShowState::default());
+        // Try to restore the slide number from the URL hash.
+        let hash = window().location().hash().unwrap();
+        let hash = hash.trim_start_matches("#slide-");
+        let slide = hash.parse::<usize>().unwrap_or(0);
+
+        let state = SlideShowState::default();
+        state.current_slide.set(slide);
+
+        // Create an effect that stores the slide number in the URL hash. We use this to restore the state when reloading the page.
+        //
+        // We put this in an on_mount to ensure that the effect runs after sycamore-router is done
+        // because otherwise our URL will be overwritten.
+        on_mount(move || {
+            create_effect(move || {
+                let current_slide = state.current_slide.get();
+                window()
+                    .history()
+                    .unwrap()
+                    .replace_state_with_url(
+                        &JsValue::null(),
+                        "",
+                        Some(&format!("#slide-{current_slide}")),
+                    )
+                    .unwrap();
+            });
+        });
+
+        provide_context(state);
         let children = props.children.call();
 
         view = view! {
@@ -53,7 +81,7 @@ pub fn SlideShow(props: SlideShowProps) -> View {
             div(class="fixed bottom-0 left-0 bg-slate-950 w-full p-2 border-slate-700 border-t-2") {
                 SlideControls()
             }
-        }
+        };
     });
     view
 }
