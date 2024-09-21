@@ -1,0 +1,29 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "file": "slides/files/BallisticCapture/68d8a316bd111d223177374eba562fb5316480af2525b1bbf81d16a9312cccc6.mp4",
+      "rev_file": "slides/files/BallisticCapture/68d8a316bd111d223177374eba562fb5316480af2525b1bbf81d16a9312cccc6_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "file": "slides/files/BallisticCapture/51d95bc82b6ea2d6dd70adf1de647aee01ef282da833fdcd06db42c9173b532b.mp4",
+      "rev_file": "slides/files/BallisticCapture/51d95bc82b6ea2d6dd70adf1de647aee01ef282da833fdcd06db42c9173b532b_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    1920,
+    1080
+  ],
+  "background_color": "#020617"
+}

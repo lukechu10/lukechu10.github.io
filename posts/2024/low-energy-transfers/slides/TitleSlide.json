@@ -1,0 +1,29 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "file": "slides/files/TitleSlide/df7d6534e58b62218192a1dcd56d6e5bae332c9cfe608e3ea463f27b9985178c.mp4",
+      "rev_file": "slides/files/TitleSlide/df7d6534e58b62218192a1dcd56d6e5bae332c9cfe608e3ea463f27b9985178c_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": true,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "file": "slides/files/TitleSlide/eceaba5640f8ffdb016195bfe7bab21f5375a46c54677cd5c1725cea1ffddada.mp4",
+      "rev_file": "slides/files/TitleSlide/eceaba5640f8ffdb016195bfe7bab21f5375a46c54677cd5c1725cea1ffddada_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    1920,
+    1080
+  ],
+  "background_color": "#020617"
+}

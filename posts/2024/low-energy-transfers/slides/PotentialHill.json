@@ -1,0 +1,49 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "file": "slides/files/PotentialHill/39bbc843d2225805140702c276c40493e4d117ec09214b55c778f5ea3a29b5ac.mp4",
+      "rev_file": "slides/files/PotentialHill/39bbc843d2225805140702c276c40493e4d117ec09214b55c778f5ea3a29b5ac_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "file": "slides/files/PotentialHill/b650ef8fe1b05440b487794b18c4f4186ab3d6a5dc901c4320619fa257fd7b44.mp4",
+      "rev_file": "slides/files/PotentialHill/b650ef8fe1b05440b487794b18c4f4186ab3d6a5dc901c4320619fa257fd7b44_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "file": "slides/files/PotentialHill/5e88be3391a6e5721699d49c504c139daf51c84222162884313d5db8458a2a6a.mp4",
+      "rev_file": "slides/files/PotentialHill/5e88be3391a6e5721699d49c504c139daf51c84222162884313d5db8458a2a6a_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "file": "slides/files/PotentialHill/8dcfd9299924683a525e24e61e45d7647d04c4a023640d6bb112009cb00ffc9a.mp4",
+      "rev_file": "slides/files/PotentialHill/8dcfd9299924683a525e24e61e45d7647d04c4a023640d6bb112009cb00ffc9a_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    1920,
+    1080
+  ],
+  "background_color": "#020617"
+}

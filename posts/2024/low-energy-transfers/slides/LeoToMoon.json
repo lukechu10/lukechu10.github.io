@@ -1,0 +1,39 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "file": "slides/files/LeoToMoon/dc8b5baf8f05330e01234b1b713b2acb6253460af2f1f87d728f8b4502b68b86.mp4",
+      "rev_file": "slides/files/LeoToMoon/dc8b5baf8f05330e01234b1b713b2acb6253460af2f1f87d728f8b4502b68b86_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "file": "slides/files/LeoToMoon/6fd2a23d3f41376736b46cec900987557872152675ab438896e695fecb54c243.mp4",
+      "rev_file": "slides/files/LeoToMoon/6fd2a23d3f41376736b46cec900987557872152675ab438896e695fecb54c243_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "file": "slides/files/LeoToMoon/ca9b7ec7604e9d726df7e5b8bf02e3e5b47999fd3e8ebbe21f8fdc06e8aada0b.mp4",
+      "rev_file": "slides/files/LeoToMoon/ca9b7ec7604e9d726df7e5b8bf02e3e5b47999fd3e8ebbe21f8fdc06e8aada0b_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    1920,
+    1080
+  ],
+  "background_color": "#020617"
+}

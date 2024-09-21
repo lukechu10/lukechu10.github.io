@@ -3,8 +3,10 @@
 use std::str::FromStr;
 
 use mdsycx::FromMd;
+use serde::Deserialize;
 use sycamore::prelude::*;
-use wasm_bindgen::JsValue;
+use sycamore::web::Suspense;
+use wasm_bindgen::prelude::*;
 
 /// Context state used to manage slides.
 #[derive(Debug, Default, Clone, Copy)]
@@ -108,7 +110,7 @@ impl FromStr for SlideKind {
 #[derive(Props, FromMd)]
 pub struct SlideProps {
     pub kind: SlideKind,
-    pub video: String,
+    pub video_json: String,
     pub children: Children,
 }
 
@@ -135,14 +137,21 @@ pub fn Slide(props: SlideProps) -> View {
         },
         SlideKind::Split => view! {
             div(class="grid grid-flow-row md:grid-flow-col md:grid-cols-2 md:content-center gap-4 w-full ") {
-                div(class="max-w-prose mx-auto md:mr-0 overflow-y-auto") {
+                div(class="max-w-prose mx-auto md:mr-0") {
                     (children)
                 }
                 div(class="sticky mt-5 top-5 h-fit mx-auto md:ml-0") {
                     (if show() {
-                        let video = props.video.clone();
+                        let video_json = props.video_json.clone();
+                        let split = video_json.split('/').collect::<Vec<_>>();
+                        if split.len() < 2 {
+                            return view! { "Error loading video" };
+                        }
+                        let url_base = split[..split.len() - 2].join("/");
                         view! {
-                            SlideGraphics(video=video)
+                            Suspense(fallback=|| "Loading...".into()) {
+                                ManimSlide(url_base=url_base, json_src=video_json)
+                            }
                         }
                     } else {
                         view! {}
@@ -152,7 +161,7 @@ pub fn Slide(props: SlideProps) -> View {
         },
     };
 
-    let class = "fixed top-0 left-0 px-3 py-20 h-full w-full overflow-y-auto overscroll-contain transition-opacity";
+    let class = "fixed top-0 left-0 px-3 pt-20 pb-10 h-full w-full overflow-y-auto overscroll-contain transition-opacity";
     let class = move || {
         if show() {
             class.to_string()
@@ -188,12 +197,12 @@ pub fn SlideSegment(props: SlideSegmentProps) -> View {
     let show = move || {
         state.current_slide.get() == slide_number && state.current_segment.get() >= segment_number
     };
-    let class = "transition-opacity";
+    let class = "inline-block transition-opacity";
     let class = move || {
         if show() {
             class.to_string()
         } else {
-            format!("{class} opacity-0 invisible")
+            format!("{class} opacity-0 invisible h-0")
         }
     };
 
@@ -244,26 +253,72 @@ pub fn NextSegmentLink(props: NextSegmentLinkProps) -> View {
     }
 }
 
-#[derive(Props, FromMd)]
-pub struct SlideGraphicsProps {
-    pub video: String,
+#[component(inline_props)]
+pub fn Video<F: Fn() -> bool + 'static>(video: String, show: F) -> View {
+    let video_ref = create_node_ref();
+
+    let show = create_selector(show);
+
+    let class = move || {
+        if show.get() {
+            "aspect-video"
+        } else {
+            "aspect-video hidden"
+        }
+    };
+
+    on_mount(move || {
+        create_effect(move || {
+            if show.get() {
+                let video = video_ref
+                    .get()
+                    .unchecked_into::<web_sys::HtmlVideoElement>();
+                let _ = video.play().unwrap();
+            }
+        });
+    });
+
+    view! {
+        div(class=class) {
+            video(r#ref=video_ref) {
+                source(src=video, r#type="video/mp4")
+            }
+        }
+    }
 }
 
-#[component]
-pub fn SlideGraphics(props: SlideGraphicsProps) -> View {
-    let video_ref = create_node_ref();
+#[derive(Debug, Deserialize)]
+struct ManimSlides {
+    slides: Vec<ManimSlideData>,
+}
+
+#[derive(Debug, Deserialize, Clone, PartialEq, Eq, Hash)]
+struct ManimSlideData {
+    file: String,
+}
+
+#[component(inline_props)]
+pub async fn ManimSlide(url_base: String, json_src: String) -> View {
+    let state = use_context::<SlideShowState>();
+
+    // Fetch the file over HTTP and parse it.
+    let response = gloo_net::http::Request::get(&json_src)
+        .send()
+        .await
+        .expect("could not fetch slide"); // TODO: handle error
+    let slides: ManimSlides = response.json().await.expect("could not parse slide");
+
     view! {
-        div(class="aspect-video") {
-            (if !props.video.is_empty() {
-                let video = props.video.clone();
-                view! {
-                    video(autoplay=true, r#ref=video_ref) {
-                        source(src=video, r#type="video/mp4")
+        div {
+            Indexed(
+                list=slides.slides.into_iter().enumerate().collect::<Vec<_>>(),
+                view=move |(i, slide)| {
+                    let src = format!("{url_base}/{}", slide.file);
+                    view! {
+                        Video(video=src, show=move || state.current_segment.get() == i)
                     }
                 }
-            } else {
-                view! { "No video..." }
-            })
+            )
         }
     }
 }

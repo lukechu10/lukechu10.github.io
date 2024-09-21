@@ -1,0 +1,69 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "file": "slides/files/EffectivePotential/85b7f43446622920ee529981bbf0cd1a94e3abaf59d4672c1535ce23a3640c46.mp4",
+      "rev_file": "slides/files/EffectivePotential/85b7f43446622920ee529981bbf0cd1a94e3abaf59d4672c1535ce23a3640c46_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "file": "slides/files/EffectivePotential/c66bc36ebd5328296704722921a7a8ec3b2b322f44c03fb26206a3516403cf9f.mp4",
+      "rev_file": "slides/files/EffectivePotential/c66bc36ebd5328296704722921a7a8ec3b2b322f44c03fb26206a3516403cf9f_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "file": "slides/files/EffectivePotential/988679a302788ef2f7e4425edbb0027c7a2887fce3cf955765846d025bd124b1.mp4",
+      "rev_file": "slides/files/EffectivePotential/988679a302788ef2f7e4425edbb0027c7a2887fce3cf955765846d025bd124b1_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "file": "slides/files/EffectivePotential/8b10142b92af7022ff751844c93ae984149eee93da3e52c594d27c97c709a322.mp4",
+      "rev_file": "slides/files/EffectivePotential/8b10142b92af7022ff751844c93ae984149eee93da3e52c594d27c97c709a322_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "file": "slides/files/EffectivePotential/2930efc9a3543f2111206d0ec3184ed09c3b6ba81cd101282c2bd5e9050d726c.mp4",
+      "rev_file": "slides/files/EffectivePotential/2930efc9a3543f2111206d0ec3184ed09c3b6ba81cd101282c2bd5e9050d726c_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "file": "slides/files/EffectivePotential/ed05ddf80a7446d19060e6241cf745b6cb5a56cba045721fe5c467b9c74db207.mp4",
+      "rev_file": "slides/files/EffectivePotential/ed05ddf80a7446d19060e6241cf745b6cb5a56cba045721fe5c467b9c74db207_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    1920,
+    1080
+  ],
+  "background_color": "#020617"
+}
