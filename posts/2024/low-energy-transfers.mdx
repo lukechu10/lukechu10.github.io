@@ -39,10 +39,7 @@ started!
 
 ## The Reduced n-body Problem
 
-To find the most fuel efficient route from Earth to Moon, we need to predict the future. Given some initial configuration of the planets and our spaceship, we want to know where we will end up. <NextSegmentLink>Let’s start with a simple example...</NextSegmentLink>
-
-</SlideSegment>
-<SlideSegment>
+To find the most fuel efficient route from Earth to Moon, we need to predict the future. Given some initial configuration of the planets and our spaceship, we want to know where we will end up. Let’s start with a simple example.
 
 ### A Single Planet
 
@@ -51,11 +48,13 @@ Here, we have a single planet and life is easy. <NextSegmentLink>Let’s give ou
 </SlideSegment>
 <SlideSegment>
 
-And we get a nice circular orbit around our planet. If we now increase our
-initial velocity we get the usual Kepler orbits. First, we have the ellipse,
+And we get a nice circular orbit around our planet. <NextSegmentLink>If we now increase our
+initial velocity</NextSegmentLink> we get the usual Kepler orbits. First, we have the ellipse,
 then the parabola, and finally, the hyperbola.
 
 </SlideSegment>
+
+<SlideSegment />
 </Slide>
 
 <Slide kind="split" video_json="/posts/2024/low-energy-transfers/slides/MultiPlanet.json">
@@ -68,80 +67,234 @@ Consider a slightly more complicated setup. Here, we have our starship in a thre
 </SlideSegment>
 <SlideSegment>
 
-And our trajectory becomes a lot more complicated. Now comes the fun part. <NextSegmentLink>Let’s vary our initial velocity again.</NextSegmentLink>
+And right away, out trajectory looks a lot more complicated.
+Now, here comes the fun part. <NextSegmentLink>Let’s vary our initial velocity again.</NextSegmentLink>
 
 </SlideSegment>
 <SlideSegment>
 
-The system is chaotic! This simply means that a tiny change in initial conditions will dramatically change the outcome. This is a problem for us. In chaotic systems, it becomes basically impossible to predict where we will end up. However, not all starting conditions are chaotic. For instance, this one is not. This is a case where we can calculate accurate predictions. Our goal then, will be to find where these regions of stable motion exist and to exploit them to get to the moon.
+The system is chaotic! Chaotic here means that a tiny variation in the initial velocity $v$ dramatically affects where we end up over a big enough distance.
+This is a problem for us. In chaotic systems, it becomes basically impossible to predict where we will end up over a long period of time.
+
+However, it is also possible for only certain regions of the system to be chaotic. For instance, given a high enough initial velocity in this example, we enter into a stable orbit around all three bodies. This then becomes a case where we can calculate accurate predictions far into the future.
+
+Out goal then, will be to find where these regions of stable motion exist and exploit them to reach the moon.
 
 </SlideSegment>
 </Slide>
 
-<Slide kind="split" video_json="/posts/low-energy-transfers/slides/LeoToMoon.json">
+<Slide kind="split" video_json="/posts/2024/low-energy-transfers/slides/LeoToMoon.json">
+<SlideSegment>
 
 ## From LEO to the Moon
 
-Now back to our original problem. Here, we have a few thousand spaceships all currently sitting in Low Earth Orbit. To get to the Moon, we must leave Low Earth Orbit. So let’s give ourselves a little push. We get this ring of spaceships as they all fly away from Earth. And when this ring intersects with Moon, we get a possible trajectory for getting to Moon. This first intersection, which is the fastest route, is our traditional Hofmann transfer orbit. But we are moving too fast relative to Moon and must slow down which uses a lot of fuel. This is no good.
-Let’s run our simulation a little longer and pay attention to the green trajectory. It flies all the way away from Earth to near the sphere of influence of Earth. Then it falls back in and is ballistically captured by Moon! There is no second burn here. This is interesting for us since this will save us a lot of fuel.
+Now back to our original problem.
+
+Here, we have a few thousand spaceships all currently sitting in Low Earth Orbit (LEO).
+To get to the Moon, we must leave Low Earth Orbit. <NextSegmentLink>So let’s give ourselves a little push.</NextSegmentLink>
+
+</SlideSegment>
+<SlideSegment>
+
+We get this ring of spaceships as they all fly away from Earth. And when this ring intersects with Moon, we get a possible trajectory for getting to Moon. This first intersection, which is the fastest route, is our traditional Hofmann transfer orbit. But we are moving too fast relative to Moon and must slow down which uses a lot of fuel. This is no good. <NextSegmentLink>Let’s run our simulation a little longer</NextSegmentLink>
+
+</SlideSegment>
+<SlideSegment>
+
+Pay attention to the green trajectory. It flies all the way away from Earth to near the sphere of influence of Earth. Then it falls back in and is ballistically captured by Moon! There is no second burn here. This is interesting for us since this will save us a lot of fuel.
 
 Let’s take a closer look at the trajectory. We start off in an elliptical orbit around Earth. But we don’t stick to it. Why not? Because of the Sun! The force from the Sun changes our orbit and lets us catch up to Moon.
 This is our low-energy ballistic capture trajectory. Now let’s try to explain where it comes from.
 
+</SlideSegment>
 </Slide>
 
-<Slide kind="split" video_json="/posts/low-energy-transfers/slides/EffectivePotential.json">
+<Slide kind="split" video_json="/posts/2024/low-energy-transfers/slides/EffectivePotential.json">
+
+<SlideSegment>
 
 ### Lagrange Points
 
-Let’s consider just the Earth and Moon for now. Each body exerts a gravitational influence so they both have a gravitational potential energy. The Moon is also orbiting around the Earth. But for us, it will be simpler to consider the Moon as stationary. To compensate for this, we must introduce fictious forces.
+Let’s consider just the Earth and Moon for now which we place on the x-y plane. <NextSegmentLink>Each body exerts a gravitational influence so they both have a gravitational potential energy.</NextSegmentLink>
 
-The centrifugal force is equal to $ω^2 r$ so integrating, we get a “centrifugal potential” equal to $\frac{1}{2} ω^2 r^2$. Intuitively, this makes some sense since the further we are away from the axis of rotation, the more we are flung outward by the centrifugal force.
-We can now add these two potentials into an effective potential. What about the Coriolis force? The Coriolis force is always perpendicular to the motion, so it doesn’t do any work. So we can safely ignore it for now.
+</SlideSegment>
+<SlideSegment>
 
-Let’s draw a contour plot of our effective potential From this diagram, we see that there are points of equilibrium. In fact, there are exactly five, which are called the Lagrange points Here, they are labelled $L_1$ to $L_5$. These points are special because if we were to sit there without moving, we could in principle stay there forever. But obviously a small nudge and we would fall right off.
+The gravitational potential energy is given by:
 
-But one of the quite surprising things about Lagrange points is that you can in fact orbit around them. These are called Halo orbits. We will be interested especially by halo orbits around $L_1$ and $L_2$.
+$$
+U_g = -G \frac{m_E}{r_E} - G \frac{m_M}{r_M}
+$$
 
+where $m_E$ and $m_M$ are the masses and $r_E$ and $r_M$ are the distances to the Earth and Moon respectively. This is plotted as the blue surface.
+
+The Moon is also orbiting around the Earth. But for us, it will be simpler to consider the Moon as stationary. <NextSegmentLink>To compensate for this, we must introduce fictious forces.</NextSegmentLink>
+
+</SlideSegment>
+<SlideSegment>
+
+The centrifugal force is equal to $\omega^2 r$ so integrating, we get a “centrifugal potential” equal to:
+
+$$
+U_c = -\frac{1}{2} \omega^2 r^2
+$$
+
+This is plotted as the purple surface.
+
+> **Fictitious Forces**
+>
+> TODO: explainer
+
+Intuitively, this makes some sense since the further we are away from the axis of rotation, the more we are flung outward by the centrifugal force.
+If we think of this potential function as a "hill", we experience more force the steeper the slope. <NextSegmentLink>We can now add these two potentials into an effective potential.</NextSegmentLink>
+
+</SlideSegment>
+<SlideSegment>
+
+Our effective potential $U_{eff} = U_g + U_c$ is plotted here in red.
+
+What about the Coriolis force? The Coriolis force is always perpendicular to the motion, so it doesn’t do any work. So we can safely ignore it for now. <NextSegmentLink>Let’s draw a contour plot of our effective potential.</NextSegmentLink>
+
+</SlideSegment>
+<SlideSegment>
+
+From this diagram, we see that there are <NextSegmentLink>certain points of equilibrium</NextSegmentLink>.
+
+</SlideSegment>
+<SlideSegment>
+
+In fact, there are exactly five, which are called the Lagrange points Here, they are labelled $L_1$ to $L_5$. These points are special because if we were to sit there without moving, we could in principle stay there forever. But give a small nudge and we would fall right off.
+
+But one of the quite surprising things about Lagrange points is that you can in fact orbit around them. Continue to the next slide to find out more.
+
+</SlideSegment>
 </Slide>
 
-<Slide kind="split" video_json="/posts/low-energy-transfers/slides/HaloOrbits.json">
+<Slide kind="split" video_json="/posts/2024/low-energy-transfers/slides/HaloOrbits.json">
+<SlideSegment>
 
 ### Halo orbits
 
-This is completely unintuitive since there is of course no matter present at either $L_1$ or $L_2$ itself. So how can you orbit around nothing? Furthermore, looking at our contour plot, it seems like $L_1$ and $L_2$ are points of unstable equilibria. And that is because they are. But the reason why we have halo orbits is because of the Coriolis force. As we are falling off the top of the potential hill, we are pushed sideways by the Coriolis force. Given the right initial conditions, we can create periodic orbits. And from these periodic orbits, we obtain stable and unstable manifolds. What are these manifolds? Let’s consider a simpler system.
+These orbits exist around the Lagrange points $L_1$ and $L_2$ and are called Halo orbits. They are unlike the usual orbits around celestial bodies because there is, in fact, no mass at all at the Lagrange point. We are in outer space after all! So how can we have a closed orbit around nothing?
+
+Remember when we decided to transform into a frame where the Moon was stationary and introduce fictitious forces, in particular, the centrifugal and Coriolis forces? So far, we have only dealt with the centrifugal force by encorporating it into our effective potential. But now, it turns out that it is the Coriolis force that is responsible for these weird Halo orbits.
+
+<NextSegmentLink>
+  As we are falling off the top of the potential hill, we are pushed sideways by
+  the Coriolis force.
+</NextSegmentLink>
+
+</SlideSegment>
+<SlideSegment>
+
+Given the right initial velocity, <NextSegmentLink>we can create a period (albeit, unstable) orbit.</NextSegmentLink>
+
+</SlideSegment>
+<SlideSegment>
+
+To get the full orbit, <NextSegmentLink>all we need to do is take the mirror image on the other side.</NextSegmentLink>
+
+</SlideSegment>
+<SlideSegment>
+
+This is not the only Halo orbit. There are, in fact, an <NextSegmentLink>infinite family of Halo orbits</NextSegmentLink> for every possible distance away from the Lagrange point.
+
+</SlideSegment>
+<SlideSegment></SlideSegment>
+</Slide>
+
+<Slide kind="split" video_json="/posts/2024/low-energy-transfers/slides/EarthMoonManifolds.json">
+
+And from these periodic orbits, we obtain stable and unstable manifolds.
+
+What are these manifolds? To explain, let us consider a simpler system. Continue onto the next slide!
 
 </Slide>
 
-<Slide kind="split" video_json="/posts/low-energy-transfers/slides/PotentialHill.json">
+<Slide kind="split" video_json="/posts/2024/low-energy-transfers/slides/PotentialHill.json">
+<SlideSegment>
 
 ### Stable and unstable manifolds
 
-Here we have the potential function U as a function of spatial position x and the corresponding phase space.
+Here we have the potential function $U$ as a function of spatial position $x$ and the corresponding phase space.
 
-Let’s shoot some rockets into the potential bump. What we obtain is a phase-space diagram of our system. In fact, we find that there is a single equilibrium point right here which corresponds to sitting on the top of the hill. Our periodic orbit is not a point but imagine for now that it is. We can then draw stable and unstable manifolds for this point. ‘Stable’ and ‘unstable’ here don’t refer to stable or unstable equilibriums. Instead, they tell us where in phase space leads us to and away from our equilibrium. They also give us the structure of the phase space. If we shoot two rockets close to either side of the stable manifold, they will leave on opposite sides of the unstable manifolds.
+> **Phase space**
+>
+> TODO: explain phase space
 
+However, we want to use this formalism to gain insight into how motion evolves in this system. To do so, <NextSegmentLink>let’s shoot some rockets into the potential hill</NextSegmentLink>.
+
+</SlideSegment>
+<SlideSegment>
+
+What we obtain is a phase-space diagram of our system. The phase space diagram, much like the diagram of a fluid flow, shows where a test object located at a certain point in phase-space evolves with time. That means that an object located at some point on one of the green curves will follow that green curve as time goes on.
+
+Looking at this phase-space diagram, we find that there is a <NextSegmentLink>single equilibrium point</NextSegmentLink> which corresponds to sitting on the top of the hill.
+
+</SlideSegment>
+<SlideSegment>
+
+Our periodic orbit is not a point but imagine for now that it is. We can then draw stable and unstable manifolds for this point. ‘Stable’ and ‘unstable’ here don’t refer to stable or unstable equilibriums. Instead, they tell us where in phase space leads us to and away from our equilibrium. <NextSegmentLink>They also give us the structure of the phase space.</NextSegmentLink>
+
+</SlideSegment>
+<SlideSegment>
+
+If we shoot two rockets close to either side of the stable manifold, they will leave on opposite sides of the unstable manifolds.
+
+</SlideSegment>
 </Slide>
 
-<Slide kind="split" video_json="/posts/low-energy-transfers/slides/EarthMoonManifolds.json">
+<Slide kind="split" video_json="/posts/2024/low-energy-transfers/slides/Manifolds3Body.json">
+<SlideSegment>
 
 ### Sun-Earth stable and unstable manifolds
 
-Let’s get back to our restricted 3-body problem. Here, we have the Sun-Earth system. And since we have periodic orbits around $L_1$, we can think of this as the top of the hill in our previous example. This means we can have stable and unstable manifolds leading to and from this orbit. And these manifolds, which look like tubes, go all the way down to Earth. We therefore fire from Low Earth Orbit following the inside of the stable manifold tube and going back in with the unstable manifold tube.
+Let’s get back to our restricted 3-body problem. Here, we have the Sun-Earth system. And since we have periodic orbits around $L_1$, we can think of this as the top of the hill in our previous example. <NextSegmentLink>This means we can have stable and unstable manifolds leading to and from this orbit.</NextSegmentLink> And these manifolds, which look like tubes, go all the way down to Earth. We therefore fire from Low Earth Orbit following the inside of the stable manifold tube and going back in with the unstable manifold tube.
 
-Well, this tube is only for the Sun-Earth system. We can also consider the restricted Earth-Moon system, which has its own set of manifolds. And the stable manifold tube for the Moon reaches all the way out to intersect with the Earth stable manifold tube. We therefore hop manifolds and find our way to the Moon!
+</SlideSegment>
+<SlideSegment>
+
+Well, this tube is only for the Sun-Earth system. <NextSegmentLink>We can also consider the restricted Earth-Moon system, which has its own st of manifolds.</NextSegmentLink> And the stable manifold tube for the Moon reaches all the way out to intersect with the Earth stable manifold tube. We therefore hop manifolds to find our way to the Moon!
 
 In fact we can think of the Solar System as a collection of many restricted-3-body systems, each with its own set of manifold tubes. We can use a similar method to travel to virtually anywhere else in the Solar System forming what is called the interplanetary transport network.
 
+</SlideSegment>
+<SlideSegment></SlideSegment>
 </Slide>
 
-<Slide kind="split" video_json="/posts/low-energy-transfers/slides/BallisticCapture.json">
+<Slide kind="split" video_json="/posts/2024/low-energy-transfers/slides/BallisticCapture.json">
+<SlideSegment>
 
 ### Ballistic Capture
 
-Going back to our ballistic capture trajectory, we see that this is indeed what happens. We follow the stable manifold tube leading to the $L_1$ Lagrange point and falling back via the unstable manifold. We are however caught by the stable manifold from the Earth-Moon system which let’s us get captured by the Moon.
+<NextSegmentLink>
+  Going back to our ballistic capture trajectory, we see that this is indeed
+  what happens.
+</NextSegmentLink>
+
+</SlideSegment>
+<SlideSegment>
+
+We follow the stable manifold tube leading to the $L_1$ Lagrange point and falling back via the unstable manifold. We are however caught by the stable manifold from the Earth-Moon system which let’s us get captured by the Moon.
 
 If this is such a great way of travelling in space, why do we still use Hohmann transfers? Well, the biggest reason is time. A Hohmann transfer to get to the Moon takes a few days. The low-energy trajectory takes a few months. A Hohmann transfer from Earth to Mars takes a few months. A low-energy trajectory could take over a thousand years!
+
+</SlideSegment>
+</Slide>
+
+<Slide>
+
+# References
+
+[1] braintruffle. (2024, January 25). _Master the complexity of spaceflight._ YouTube. <https://www.youtube.com/watch?v=dhYqflvJMXc>,
+
+[2] Howell, K. C., Beckman, M., Patterson, C., & Folta, D. (2006). _Representations of invariant manifolds for applications in three-body systems._ The Journal of the Astronautical Sciences, 54(1), 69–93. <https://doi.org/10.1007/bf03256477>,
+
+[3] Topputo, F. (2016). _Fast numerical approximation of invariant manifolds in the circular restricted three-body problem._ Communications in Nonlinear Science and Numerical Simulation, 32, 89–98. <https://doi.org/10.1016/j.cnsns.2015.08.004>,
+
+[4] Lo, Martin. (2002). _The InterPlanetary Superhighway and the Origins Program._ 7. 7-3543 . 10.1109/AERO.2002.1035332.,
+
+Source code for these slides can be found at <https://github.com/lukechu10/interplanetary-transport-network>.
 
 </Slide>
 </SlideShow>
