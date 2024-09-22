@@ -300,7 +300,7 @@ pub fn Video<F: Fn() -> bool + 'static>(
                 source(src=video, r#type="video/mp4")
             }
             button(
-                class=format!("bg-slate-800 font-mono text-sm rounded px-2 py-1 block mt-4 mx-auto transition-opacity {}",
+                class=format!("bg-slate-800 font-mono text-sm rounded px-2 py-1 block mx-auto my-4 transition-opacity {}",
                     if show_replay_btn.get() && state.current_segment.get() != 0 { "opacity-100" } else { "invisible opacity-0" }
                 ),
                 on:click=replay,
