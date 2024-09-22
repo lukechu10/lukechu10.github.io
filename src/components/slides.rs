@@ -183,7 +183,7 @@ pub struct SlideSegmentProps {
 
 #[component]
 pub fn SlideSegment(props: SlideSegmentProps) -> View {
-    // Register ths slide segment.
+    // Register the slide segment.
     let state = use_context::<SlideShowState>();
     let (slide_number, segment_number) = state.slides.update(|slides| {
         let slide_number = slides.len() - 1;
@@ -373,20 +373,25 @@ pub fn SlideControls() -> View {
     };
 
     view! {
-        div(class="block m-auto text-sm flex flex-row justify-center gap-10") {
-            button(
-                class=previous_class,
-                disabled=!has_previous(),
-                on:click=previous,
-            ) {
-                "< Previous"
+        div(class="m-auto text-sm flex flex-row") {
+            div(class="flex-grow flex flex-row justify-center gap-10") {
+                button(
+                    class=previous_class,
+                    disabled=!has_previous(),
+                    on:click=previous,
+                ) {
+                    "< Previous"
+                }
+                button(
+                    class=next_class,
+                    disabled=!has_next(),
+                    on:click=next,
+                ) {
+                    "Next >"
+                }
             }
-            button(
-                class=next_class,
-                disabled=!has_next(),
-                on:click=next,
-            ) {
-                "Next >"
+            span(class="flex-initial") {
+                (state.current_slide.get() + 1) " / " (state.slides.with(Vec::len))
             }
         }
     }
