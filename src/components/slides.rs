@@ -257,8 +257,11 @@ pub fn NextSegmentLink(props: NextSegmentLinkProps) -> View {
 pub fn Video<F: Fn() -> bool + 'static>(
     video: String,
     show: F,
+    r#loop: bool,
     #[prop(attributes(html, video))] attributes: Attributes,
 ) -> View {
+    let state = use_context::<SlideShowState>();
+
     let video_ref = create_node_ref();
 
     let show = create_selector(show);
@@ -282,10 +285,27 @@ pub fn Video<F: Fn() -> bool + 'static>(
         });
     });
 
+    let show_replay_btn = create_signal(false);
+    let replay = move |_| {
+        let video = video_ref.get().unchecked_into::<web_sys::HtmlVideoElement>();
+        video.pause().unwrap();
+        video.set_current_time(0.0);
+        let _ = video.play().unwrap();
+        show_replay_btn.set(false);
+    };
+
     view! {
         div(class=class) {
-            video(r#ref=video_ref, ..attributes) {
+            video(r#ref=video_ref, r#loop=r#loop, ..attributes, on:ended=move |_| if !r#loop { show_replay_btn.set(true); }) {
                 source(src=video, r#type="video/mp4")
+            }
+            button(
+                class=format!("bg-slate-800 font-mono text-sm rounded px-2 py-1 block mt-4 mx-auto transition-opacity {}",
+                    if show_replay_btn.get() && state.current_segment.get() != 0 { "opacity-100" } else { "invisible opacity-0" }
+                ),
+                on:click=replay,
+            ) {
+                "Replay"
             }
         }
     }
