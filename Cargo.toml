@@ -2,7 +2,7 @@
 name = "blog"
 version = "0.1.0"
 edition = "2021"
-publish = true
+publish = false
 
 [dependencies]
 console_error_panic_hook = "0.1.7"
@@ -23,3 +23,8 @@ web-sys = { version = "0.3.70", features = [
 [patch.crates-io]
 sycamore = { git = "https://github.com/sycamore-rs/sycamore", rev = "d2b25c9" }
 sycamore-router = { git = "https://github.com/sycamore-rs/sycamore", rev = "d2b25c9" }
+
+[profile.release]
+strip = "debuginfo"
+panic = "abort"
+opt-level = "s"

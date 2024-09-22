@@ -254,7 +254,11 @@ pub fn NextSegmentLink(props: NextSegmentLinkProps) -> View {
 }
 
 #[component(inline_props)]
-pub fn Video<F: Fn() -> bool + 'static>(video: String, show: F) -> View {
+pub fn Video<F: Fn() -> bool + 'static>(
+    video: String,
+    show: F,
+    #[prop(attributes(html, video))] attributes: Attributes,
+) -> View {
     let video_ref = create_node_ref();
 
     let show = create_selector(show);
@@ -280,7 +284,7 @@ pub fn Video<F: Fn() -> bool + 'static>(video: String, show: F) -> View {
 
     view! {
         div(class=class) {
-            video(r#ref=video_ref) {
+            video(r#ref=video_ref, ..attributes) {
                 source(src=video, r#type="video/mp4")
             }
         }
@@ -295,11 +299,14 @@ struct ManimSlides {
 #[derive(Debug, Deserialize, Clone, PartialEq, Eq, Hash)]
 struct ManimSlideData {
     file: String,
+    #[serde(rename = "loop")]
+    r#loop: bool,
+    auto_next: bool,
 }
 
 #[component(inline_props)]
 pub async fn ManimSlide(url_base: String, json_src: String) -> View {
-    let state = use_context::<SlideShowState>();
+    let mut state = use_context::<SlideShowState>();
 
     // Fetch the file over HTTP and parse it.
     let response = gloo_net::http::Request::get(&json_src)
@@ -315,7 +322,16 @@ pub async fn ManimSlide(url_base: String, json_src: String) -> View {
                 view=move |(i, slide)| {
                     let src = format!("{url_base}/{}", slide.file);
                     view! {
-                        Video(video=src, show=move || state.current_segment.get() == i)
+                        Video(
+                            video=src,
+                            r#loop=slide.r#loop,
+                            show=move || state.current_segment.get() == i,
+                            on:ended=move |_| {
+                                if slide.auto_next {
+                                    state.current_segment += 1;
+                                }
+                            },
+                        )
                     }
                 }
             )

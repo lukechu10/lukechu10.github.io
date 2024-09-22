@@ -31,9 +31,6 @@
       "rev_file": "slides/files/SinglePlanet/07a94d13e6ea85cb33653e3dae21ed636dd24b227655c2885f5ac40e7a043ce2_reversed.mp4"
     }
   ],
-  "resolution": [
-    1920,
-    1080
-  ],
+  "resolution": [1920, 1080],
   "background_color": "#020617"
 }
