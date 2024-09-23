@@ -66,7 +66,9 @@ pub struct PostMetadata {
     pub title: String,
     #[serde(deserialize_with = "deserialize_date")]
     pub date: PostDate,
+    #[serde(default)]
     pub desc: String,
+    #[serde(default)]
     pub tags: Vec<String>,
     #[serde(default)]
     pub layout: PostLayout,
