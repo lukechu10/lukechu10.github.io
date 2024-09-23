@@ -214,31 +214,32 @@ But one of the quite surprising things about Lagrange points is that you can in 
 
 These orbits exist around the Lagrange points $L_1$ and $L_2$ and are called Halo orbits. They are unlike the usual orbits around celestial bodies because there is, in fact, no mass at all at the Lagrange point. We are in outer space after all! So how can we have a closed orbit around nothing?
 
-Remember when we decided to transform into a frame where the Moon was stationary and introduce fictitious forces, in particular, the centrifugal and Coriolis forces? So far, we have only dealt with the centrifugal force by encorporating it into our effective potential. But now, it turns out that it is the Coriolis force that is responsible for these weird Halo orbits.
+Remember when we decided to transform into a frame where the Moon was stationary and introduce fictitious forces, in particular, the centrifugal and Coriolis forces? So far, we have only dealt with the centrifugal force by incorporating it into our effective potential. But as it turns out, it is the Coriolis force that is responsible for these weird Halo orbits.
 
-<NextSegmentLink>
-
-As we are falling off the top of the potential hill, we are pushed sideways by the Coriolis force.
-
-</NextSegmentLink>
+Let's start off a little to the side of the Lagrange point $L_1$ with a velocity purely in the vertical direction. <NextSegmentLink>As we fall away from the Lagrange point, we are pushed sideways by the Coriolis force.</NextSegmentLink>
 
 </SlideSegment>
 <SlideSegment>
 
-Given the right initial velocity, <NextSegmentLink>we can create a period (albeit, unstable) orbit.</NextSegmentLink>
+This gives us a bunch of different trajectories for slightly different velocities. To find the trajectory that results in a closed orbit, simply select the one that cross the horizontal again at a perpendicular angle. <NextSegmentLink>This one!</NextSegmentLink>
 
 </SlideSegment>
 <SlideSegment>
 
-To get the full orbit, <NextSegmentLink>all we need to do is take the mirror image on the other side.</NextSegmentLink>
+Now to get a full orbit, <NextSegmentLink>all we need to do is take the mirror image on the other side.</NextSegmentLink>
 
 </SlideSegment>
 <SlideSegment>
 
-This is not the only Halo orbit. There are, in fact, an <NextSegmentLink>infinite family of Halo orbits</NextSegmentLink> for every possible distance away from the Lagrange point.
+This is not the only Halo orbit. There are, in fact, an <NextSegmentLink>infinite family of Halo orbits</NextSegmentLink> for different distances away from the $L_1$ point. We can find them by repeating the same method as we have described above.
 
 </SlideSegment>
-<SlideSegment></SlideSegment>
+
+<SlideSegment>
+
+This particular family of orbits are called the _Lyapunov orbits_. There are many other kinds of orbits around Lagrange points, but they extend up into the third dimension, such as the [Lissajous orbits](https://en.wikipedia.org/wiki/Lissajous_orbit). Since we are only dealing with two dimensions, we'll keep our lives simple but just considering these Halo orbits.
+
+</SlideSegment>
 </Slide>
 
 <Slide kind="split" video_json="/assets/low-energy-transfers/slides/EarthMoonManifolds.json">
@@ -338,7 +339,7 @@ Going back to our ballistic capture trajectory, <NextSegmentLink>we see that thi
 </SlideSegment>
 <SlideSegment>
 
-We follow the stable manifold tube leading to (the periodic orbit around) the $L_1$ Lagrange point and falling back via the unstable manifold. We are however caught by the stable manifold from the Earth-Moon system which let's us get captured by the Moon.
+We follow the stable manifold tube leading to (the periodic orbit around) the $L_1$ Lagrange point and falling back via the unstable manifold. We are caught however by the stable manifold from the Earth-Moon system which let's us get captured by the Moon.
 
 If this is such a great way of travelling in space, why do we still use Hohmann transfers? Well, the biggest reason is time. A Hohmann transfer to get to the Moon takes a few days. The low-energy trajectory takes a few months. A Hohmann transfer from Earth to Mars takes a few months. A low-energy trajectory could take over a thousand years!
 
@@ -351,7 +352,7 @@ In fact, this has already been done quite a few times in real life, such as salv
 
 <Slide>
 
-Source code for these slides can be found at <https://github.com/lukechu10/interplanetary-transport-network>.
+Source code for the animations can be found at <https://github.com/lukechu10/interplanetary-transport-network>.
 
 Numerical simulations for this project were written in [Rust](https://www.rust-lang.org/). The animations were written in [Python](https://www.python.org/) using the excellent [Manim (Community Edition)](https://github.com/ManimCommunity/manim) library.
 

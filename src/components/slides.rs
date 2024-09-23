@@ -393,7 +393,7 @@ pub fn SlideControls() -> View {
     };
 
     view! {
-        div(class="m-auto text-sm flex flex-row") {
+        div(class="m-auto text-xs font-mono flex flex-row") {
             div(class="flex-grow flex flex-row justify-center gap-10") {
                 button(
                     class=previous_class,
