@@ -1,10 +1,10 @@
 ---
-title: Building an Arcade Cabinet - Design and Materials
+title: Building an Arcade Cabinet - Part 1. Design and Materials
 date: 2024-09-24
 tags: [arcade-cabinet]
 ---
 
-# Building an Arcade Cabinet - Design and Materials
+# Building an Arcade Cabinet - Part 1. Design and Materials
 
 This summer, I built an arcade cabinet from scratch.
 
@@ -13,21 +13,72 @@ This was my first wood working project. Since I had no idea what I was doing, or
 - [RetroMash](https://retromash.com/2015/01/02/building-a-home-arcade-machine-part-1/) - A great blog that walks you through every step of building a cabinet, from getting the materials to putting on the finishing touches.
 - [DIY-arcade](https://github.com/maxvfischer/DIY-arcade) - Another great resource with step by step instructions. Also includes CAD files! This served as a great reference when designing my own cabinet.
 - [Slagcoin](https://www.slagcoin.com/joystick/layout.html) - Basically the bible of arcade control panel layouts.
+- [Build Your Own Arcade Controls Wiki](https://wiki.arcadecontrols.com/index.php/Main_Page) - Includes some useful information, especially on joystick mounting.
 
 And many more which I have forgotten to include.
+
+This post will be the start of a series where I describe how I built my own arcade cabinet and the lessons I learned along the way.
 
 ## CAD Design
 
 The first step in building an arcade cabinet is designing it. There are plenty of pre-made cabinet plans out there already, many which are available for free. In fact, [this website](https://www.classicarcadecabinets.com/arcade-plans-by-title.html) contains a giant list of plans for all the original cabinets of many different arcade games.
 
-However, I was feeling ambitious and so I wanted to build a completely custom arcade cabinet from scratch. There are many ways of designing your cabinet from scratch. Popular options seem to be [SketchUp](https://www.sketchup.com) and [Autodesk Fusion](https://www.autodesk.com/products/fusion-360/overview). Of course, drawing all the plans out on paper is also a possible option. But I wanted to play around with the fancy tools so I opted for CAD instead. I had used SketchUp before for a different project but wasn't particularly a big fan so I decided to try out Fusion. I also had free access to an educational license which was convenient, since the price of an Autodesk license can be quite steep.
+However, I was feeling ambitious and so I wanted to build a completely custom arcade cabinet from scratch. There are many tools for designing your cabinet from scratch. Popular options seem to be [SketchUp](https://www.sketchup.com) and [Autodesk Fusion](https://www.autodesk.com/products/fusion-360/overview). Of course, drawing all the plans out on paper is also a possible option. But I wanted to play around with some fancy new tools so I opted for Fusion instead. I had used SketchUp before for a different project but wasn't particularly a big fan. I also had free access to an educational Autodesk license which was convenient, since the price of an Autodesk license can be quite steep.
 
 It took me a little over a week of fiddling around, a lot of it spent learning the software, the come up with a complete design of my cabinet. Overall, the process was not too painful and I learned a lot about CAD modeling.
 
 You can download my CAD file <a href="/assets/arcade/arcade_design.f3d" download rel="external">here</a>.
 
-## Tools and Materials
+Here is a render of the cabinet:
+![design render](/assets/arcade/images/arcade_design_1.webp)
 
+As I soon discovered, Fusion also had quite a few other tools beyond modeling which turned out to be useful. One of them was the ability to generate detailed drawings so that I could print them out for reference instead of fiddling with my laptop at the work scene.
+![design drawings](/assets/arcade/images/arcade_design_2.webp)
+
+Another cool tool which I ended up using was being able to automatically generate a _cut list_ from my 3D design. Although this is not natively supported in Fusion, it's still pretty easy to get started by using something like [this plugin](https://github.com/bluekeyes/Fusion360-ExportCutlist) along with [CutlistEvo](https://cutlistevo.com/). This was probably overkill for a project like this but was fun to play around with nonetheless.
+![design cutlist](/assets/arcade/images/arcade_design_3.avif)
+
+## Wood
+
+Now that I had a complete design, it was time to start gathering up materials and supplies. This includes, of course, the wood for the cabinet. There are two main choices for arcade cabinets: **Plywood** and **Medium Density Fiberboard** or MDF.
+
+Plywood is light and sturdy. MDF, on the other hand, is much heavier and slightly less strong. However, MDF is generally much easier to work with than Plywood since it does not have any wood grain and so won't splinter. MDF also comes with a really smooth surface which makes it easy to paint. Finally, MDF is generally slightly cheaper than Plywood although lumber seems really expensive in general these days.
+
+The standard dimensions for these kinds of sheet goods are 4' ✕ 8' (1200mm ✕ 2440mm) and come in various thickness. The most common thickness to use is 3/4in. (19mm) to get that retro cabinet feel although you might be able to pull it off with 5/8in. (15mm).
+I ended up getting three sheets of 4' ✕ 8' 3/4in. MDF. Many lumberyards offer a free service where they can make some rough cuts for you so that it is easier to carry your wood back home. This also saves some work of cutting up the wood yourself. This is what it looked like after unloading the wood in the back yard.
 ![wood](/assets/arcade/images/wood.jpg)
 
-Three 4'x8' MDF boards.
+## Tools
+
+You will need a lot of tools for this project. I acquired many of these from local yard sales for some exceptional deals. Our neighbor was already very kind in lending me some of his power tools. Finally, I bought the remaining tools from Home Depot or Amazon. These are the power tools that I ended up using.
+
+- **Circular Saw**: This was very useful for cutting straight edges since I did not have a table saw. Making straight cuts was very easy if you first attach a guide such as a metal leveler or just a piece of scrap wood.
+- **Jig Saw**: Very useful for cutting curves and for small pieces where the circular saw would not fit.
+- **Drill set**: Used one for drilling all the holes for the buttons in the control panel. Also used for drilling pilot holes for screws in MDF.
+- **Router and router bits**: Turned out to be absolutely essential for a bunch of tasks. I used a small portable router to cut slots for T-molding and for routing various insets on the control panel.
+
+Other tools that I used:
+
+- **Clamps of all shapes and sizes**: You can never have enough clamps. I had quite a few clamps of different sizes along with some long bar clamps but even then there were many times where I wished I had more clamps. You don't want to be stuck because you are waiting for the glue to dry and have ran out of clamps.
+- **Straight edge and right angle**. Great for making quick measurements and drawing right angles.
+- **Tape measurer**: When the straight edge was not long enough.
+- **Wood glue**: I thought I would need a lot of it so I got an entire 16oz. bottle of Titebond III but it turned out to be way too much. I ended up only using about a third of all the glue.
+- **Screws**: I did not end up using much screws at all since I was relying mostly on wood glue for all the joinery. The times I did need screws were for, e.g., mounting the pullout keyboard tray. If you are using MDF, make sure to get appropriate screws (usually with coarse threads) since MDF is known to not hold screws very well. Also make sure to never take the screws out since they won't hold any weight after that.
+- **Pens and pencils**.
+- **Primer and Paint**.
+- **Sander and sandpaper**: Needed to get a nice finish.
+
+## Other Materials
+
+Of course, an Arcade Cabinet is more than just a wooden box. Here are some of the other things you'll probably need at some point:
+
+- **Monitor**: Of course, arcade purists will insist that only a CRT monitor can be used to replicate the retro arcade look and feel. I decided, however, to go for a LED computer monitor instead. I ended up using a 28in. Dell monitor with 16:10 aspect ratio, which, although not 4:3, was slightly better than the standard 16:9 aspect ratio.
+- **Joystick, buttons, and other controls**: Since I had already put in all this work into this cabinet, I wanted the best of the best when it came to arcade controls so I ended up getting Sanwa buttons and joysticks. I will take more about the controls and the control panel in a future post.
+- **Coinbox**: Although not strictly necessary, it turned out to be a nice finishing touch to the cabinet.
+- **Plexiglass**: Again, not strictly necessary but makes the build look more polished overall.
+- **T-molding**: An easy way to make your cabinet look good.
+- **Lights for light up marquee**.
+- **Speakers**.
+- **Hinges, slider rails, and other utility hardware pieces**: Depending on your design, you may need one or more of these items.
+
+That's it for this post. In the next post, I'll talk about cutting the pieces and assembling the main frame of the cabinet together.
