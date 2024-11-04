@@ -8,10 +8,10 @@ publish = false
 console_error_panic_hook = "0.1.7"
 gloo-net = { version = "0.6.0", features = ["http"] }
 include_dir = { version = "0.7.4", features = ["glob"] }
-mdsycx = { git = "https://github.com/lukechu10/mdsycx", rev = "6caa443" }
+mdsycx = "0.2.0"
 serde = { version = "1.0.210", features = ["derive"] }
 serde_json = "1.0.128"
-sycamore = { version = "0.9.0-beta.4", features = ["suspense"] }
+sycamore = { version = "0.9.0", features = ["suspense"] }
 sycamore-hooks = { git = "https://github.com/lukechu10/sycamore-hooks", rev = "9cb3018" }
 sycamore-router = "0.9.0-beta.4"
 wasm-bindgen = "0.2.93"
@@ -20,11 +20,10 @@ web-sys = { version = "0.3.70", features = [
 	"HtmlVideoElement",
 ] }
 
-[patch.crates-io]
-sycamore = { git = "https://github.com/sycamore-rs/sycamore", rev = "d2b25c9" }
-sycamore-router = { git = "https://github.com/sycamore-rs/sycamore", rev = "d2b25c9" }
-
 [profile.release]
 strip = "debuginfo"
 panic = "abort"
 opt-level = "s"
+
+[patch.crates-io]
+sycamore = { git = "https://github.com/sycamore-rs/sycamore" }
