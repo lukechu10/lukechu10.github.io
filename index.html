@@ -1,47 +1,55 @@
 <!doctype html>
 <html>
+  <head>
+    <title>lukechu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-	<title>lukechu</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link data-trunk rel="rust" data-wasm-opt="s" data-keep-debug="true" />
 
-	<link data-trunk rel="rust" data-wasm-opt="s" />
+    <link data-trunk rel="tailwind-css" href="assets/index.scss" />
+    <link
+      data-trunk
+      rel="copy-file"
+      href="assets/google32773af3167b4156.html"
+    />
+    <link data-trunk rel="copy-file" href="404.html" />
+    <link data-trunk rel="copy-dir" href="assets" />
+    <link data-trunk rel="copy-dir" href="posts" />
 
-	<link data-trunk rel="tailwind-css" href="assets/index.scss" />
-	<link data-trunk rel="copy-file" href="assets/google32773af3167b4156.html" />
-	<link data-trunk rel="copy-file" href="404.html" />
-	<link data-trunk rel="copy-dir" href="assets" />
-	<link data-trunk rel="copy-dir" href="posts" />
+    <link type="text/css" rel="stylesheet" href="/assets/prism.css" />
+    <script type="text/javascript" src="/assets/prism.js"></script>
+    <script
+      id="MathJax-script"
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
 
-	<link type="text/css" rel="stylesheet" href="/assets/prism.css" />
-	<script type="text/javascript" src="/assets/prism.js"></script>
-	<script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/javascript">
+      // Single Page Apps for GitHub Pages
+      // MIT License
+      // https://github.com/rafgraph/spa-github-pages
+      (function (l) {
+        if (l.search[1] === "/") {
+          var decoded = l.search
+            .slice(1)
+            .split("&")
+            .map(function (s) {
+              return s.replace(/~and~/g, "&");
+            })
+            .join("?");
+          window.history.replaceState(
+            null,
+            null,
+            l.pathname.slice(0, -1) + decoded + l.hash,
+          );
+        }
+      })(window.location);
+    </script>
+    <script
+      defer
+      src="https://cloud.umami.is/script.js"
+      data-website-id="4ea18895-1c63-4382-b58f-094c0ba1e8e8"
+    ></script>
+  </head>
 
-	<script type="text/javascript">
-		// Single Page Apps for GitHub Pages
-		// MIT License
-		// https://github.com/rafgraph/spa-github-pages
-		(function (l) {
-			if (l.search[1] === "/") {
-				var decoded = l.search
-					.slice(1)
-					.split("&")
-					.map(function (s) {
-						return s.replace(/~and~/g, "&");
-					})
-					.join("?");
-				window.history.replaceState(
-					null,
-					null,
-					l.pathname.slice(0, -1) + decoded + l.hash,
-				);
-			}
-		})(window.location);
-	</script>
-	<script defer src="https://cloud.umami.is/script.js"
-		data-website-id="4ea18895-1c63-4382-b58f-094c0ba1e8e8"></script>
-</head>
-
-<body></body>
-
+  <body></body>
 </html>
