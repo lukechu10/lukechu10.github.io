@@ -50,7 +50,7 @@ fn Footer() -> View {
     view! {
         footer(class="p-2 border-t-2 border-slate-700 text-xs font-mono") {
             div(class="flex flex-row justify-between") {
-                div { "© 2024 Luke Chu" }
+                div { "© 2025 Luke Chu" }
                 div {
                     "Made with "
                     a(class="hover:underline font-bold text-red-200", href="https://rust-lang.org") { "Rust" }
