@@ -18,7 +18,7 @@ pub struct PostDate {
 
 impl PartialOrd for PostDate {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        Some((self.year, self.month, self.day).cmp(&(other.year, other.month, other.day)))
+        Some(self.cmp(other))
     }
 }
 impl Ord for PostDate {
