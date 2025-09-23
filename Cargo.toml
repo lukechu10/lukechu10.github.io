@@ -11,9 +11,9 @@ include_dir = { version = "0.7.4", features = ["glob"] }
 mdsycx = "0.2.0"
 serde = { version = "1.0.210", features = ["derive"] }
 serde_json = "1.0.128"
-sycamore = { version = "0.9.1", features = ["suspense"] }
+sycamore = { version = "0.9.2", features = ["suspense"] }
 sycamore-hooks = { git = "https://github.com/lukechu10/sycamore-hooks", rev = "9cb3018" }
-sycamore-router = "0.9.1"
+sycamore-router = "0.9.2"
 wasm-bindgen = "0.2.93"
 web-sys = { version = "0.3.70", features = [
 	"DomTokenList",
