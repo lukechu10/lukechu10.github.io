@@ -80,7 +80,7 @@ pub fn SlideShow(props: SlideShowProps) -> View {
             div(class="slide") {
                 (children)
             }
-            div(class="fixed bottom-0 left-0 bg-slate-950 w-full p-2 border-slate-700 border-t-2") {
+            div(class="fixed bottom-0 left-0 bg-slate-900 w-full p-2") {
                 SlideControls()
             }
         };
@@ -287,7 +287,9 @@ pub fn Video<F: Fn() -> bool + 'static>(
 
     let show_replay_btn = create_signal(false);
     let replay = move |_| {
-        let video = video_ref.get().unchecked_into::<web_sys::HtmlVideoElement>();
+        let video = video_ref
+            .get()
+            .unchecked_into::<web_sys::HtmlVideoElement>();
         video.pause().unwrap();
         video.set_current_time(0.0);
         let _ = video.play().unwrap();

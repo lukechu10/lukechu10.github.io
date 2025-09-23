@@ -31,12 +31,13 @@ pub fn Route(route: ReadSignal<Routes>) -> View {
 #[component]
 fn Header() -> View {
     view! {
-        header(class="z-50 p-2 bg-inherit border-b-2 border-slate-700 text-sm font-mono text-red-200 sm:px-5") {
+        header(class="z-50 p-2 bg-inherit border-b-2 border-slate-700 text-sm font-mono text-red-200 sm:px-10 md:px-20 lg:px-40 xl:px-60") {
             nav(class="flex flex-row justify-between items-center") {
-                div(class="self-start") {
-                    a(class="hover:underline font-bold", href="/") { "$ cd /home/lukechu" }
+                div(class="self-start hover:underline font-bold") {
+                    a(class="hidden sm:inline", href="/") { "$ cd /home/lukechu" }
+                    a(class="inline sm:hidden", href="/") { "lukechu" }
                 }
-                div(class="self-end flex flex-row gap-4") {
+                div(class="self-end flex flex-row gap-4 sm:gap-6 md:gap-8") {
                     div { a(class="hover:underline", href="/about") { "about" } }
                     div { a(class="hover:underline", href="https://github.com/lukechu10") { "github" } }
                 }
@@ -48,10 +49,10 @@ fn Header() -> View {
 #[component]
 fn Footer() -> View {
     view! {
-        footer(class="p-2 border-t-2 border-slate-700 text-xs font-mono") {
+        footer(class="p-2 bg-slate-900 text-xs font-mono") {
             div(class="flex flex-row justify-between") {
                 div { "© 2025 Luke Chu" }
-                div {
+                div(class="text-[9pt]") {
                     "Made with "
                     a(class="hover:underline font-bold text-red-200", href="https://rust-lang.org") { "Rust" }
                     " and "
