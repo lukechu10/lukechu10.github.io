@@ -5,7 +5,7 @@ use std::sync::LazyLock;
 use include_dir::{include_dir, Dir};
 use mdsycx::{ComponentMap, ParseRes};
 use serde::Deserialize;
-use sycamore::prelude::*;
+use sycamore::{prelude::*, web::Portal};
 use sycamore_hooks::window::use_title;
 use wasm_bindgen::prelude::*;
 
@@ -132,6 +132,18 @@ pub fn PostView(id: String) -> View {
         .with("span", crate::components::math::MathDisplay)
         .with("ShowDate", crate::components::ShowDate);
 
+    let portal = view! {
+        Portal(selector="head") {
+            (if !post.front_matter.desc.is_empty() {
+                view! {
+                    meta(name="description", content=post.front_matter.desc.clone())
+                }
+            } else {
+                view! {}
+            })
+        }
+    };
+
     match post.front_matter.layout {
         PostLayout::Prose => view! {
             div(class="post-content max-w-prose mx-auto") {
@@ -139,11 +151,13 @@ pub fn PostView(id: String) -> View {
 
                 mdsycx::MDSycX(body=post.body.clone(), components=components)
             }
+            (portal)
         },
         PostLayout::Full => view! {
             div(class="post-content") {
                 mdsycx::MDSycX(body=post.body.clone(), components=components)
             }
+            (portal)
         },
     }
 }
