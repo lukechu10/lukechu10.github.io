@@ -23,7 +23,6 @@ pub fn Route(route: ReadSignal<Routes>) -> View {
                     },
                 })
             }
-            Footer()
         }
     }
 }
@@ -40,23 +39,6 @@ fn Header() -> View {
                 div(class="self-end flex flex-row gap-4 sm:gap-6 md:gap-8") {
                     div { a(class="hover:underline", href="/about") { "about" } }
                     div { a(class="hover:underline", href="https://github.com/lukechu10") { "github" } }
-                }
-            }
-        }
-    }
-}
-
-#[component]
-fn Footer() -> View {
-    view! {
-        footer(class="p-2 bg-slate-900 text-xs font-mono") {
-            div(class="flex flex-row justify-between") {
-                div { "© 2025 Luke Chu" }
-                div(class="text-[9pt]") {
-                    "Made with "
-                    a(class="hover:underline font-bold text-red-200", href="https://rust-lang.org") { "Rust" }
-                    " and "
-                    a(class="hover:underline font-bold text-red-200", href="https://github.com/sycamore-rs/sycamore") { "Sycamore" }
                 }
             }
         }
