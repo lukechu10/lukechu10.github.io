@@ -1,9 +1,10 @@
 use sycamore::prelude::*;
 
-use crate::pages::post::POSTS;
+use crate::{pages::post::POSTS, shell::set_title};
 
 #[component]
 pub fn Home() -> View {
+    set_title("lukechu");
     view! {
         PostList()
     }

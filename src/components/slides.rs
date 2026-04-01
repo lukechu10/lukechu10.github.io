@@ -33,26 +33,33 @@ pub struct SlideShowProps {
 pub fn SlideShow(props: SlideShowProps) -> View {
     let mut view = View::default();
 
-    // Prevent overflow on the body.
-    let body = web_sys::window()
-        .unwrap()
-        .document()
-        .unwrap()
-        .body()
-        .unwrap();
-    body.class_list().add_1("overflow-hidden").unwrap();
-    on_cleanup(move || {
-        body.class_list().remove_1("overflow-hidden").unwrap();
-    });
+    is_not_ssr! {
+        // Prevent overflow on the body.
+        let body = web_sys::window()
+            .unwrap()
+            .document()
+            .unwrap()
+            .body()
+            .unwrap();
+        body.class_list().add_1("overflow-hidden").unwrap();
+        on_cleanup(move || {
+            body.class_list().remove_1("overflow-hidden").unwrap();
+        });
+    }
 
     create_child_scope(|| {
-        // Try to restore the slide number from the URL hash.
-        let hash = window().location().hash().unwrap();
-        let hash = hash.trim_start_matches("#slide-");
-        let slide = hash.parse::<usize>().unwrap_or(0);
-
         let state = SlideShowState::default();
-        state.current_slide.set(slide);
+
+        is_not_ssr! {
+            // Try to restore the slide number from the URL hash.
+            // However, we set the current slide in an `on_mount` to ensure that we properly
+            // hydrate first.
+            let hash = window().location().hash().unwrap();
+            let hash = hash.trim_start_matches("#slide-");
+            let slide = hash.parse::<usize>().unwrap_or(0);
+
+            on_mount(move || state.current_slide.set(slide));
+        }
 
         // Create an effect that stores the slide number in the URL hash. We use this to restore the state when reloading the page.
         //
@@ -74,11 +81,10 @@ pub fn SlideShow(props: SlideShowProps) -> View {
         });
 
         provide_context(state);
-        let children = props.children.call();
 
         view = view! {
             div(class="slide") {
-                (children)
+                (props.children)
             }
             div(class="fixed bottom-0 left-0 bg-slate-900 w-full p-2") {
                 SlideControls()
@@ -127,18 +133,16 @@ pub fn Slide(props: SlideProps) -> View {
 
     let show = move || state.current_slide.get() == slide_number;
 
-    let children = props.children.call();
-
     let slide_content = match props.kind {
         SlideKind::Text => view! {
             div(class="max-w-prose mx-auto") {
-                (children)
+                (props.children)
             }
         },
         SlideKind::Split => view! {
             div(class="grid grid-flow-row md:grid-flow-col md:grid-cols-2 md:content-center gap-4 w-full ") {
                 div(class="max-w-prose mx-auto md:mr-0") {
-                    (children)
+                    (props.children)
                 }
                 div(class="sticky mt-5 top-5 h-fit mx-auto md:ml-0") {
                     (if show() {
@@ -366,7 +370,7 @@ pub fn SlideControls() -> View {
     let mut state = use_context::<SlideShowState>();
 
     let has_previous = move || state.current_slide.get() > 0;
-    let has_next = move || state.current_slide.get() < state.slides.with(Vec::len) - 1;
+    let has_next = move || state.current_slide.get() + 1 < state.slides.with(Vec::len);
 
     let previous_class = move || {
         if has_previous() {

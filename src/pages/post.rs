@@ -5,9 +5,10 @@ use std::sync::LazyLock;
 use include_dir::{include_dir, Dir};
 use mdsycx::{ComponentMap, ParseRes};
 use serde::Deserialize;
-use sycamore::{prelude::*, web::Portal};
-use sycamore_hooks::window::use_title;
+use sycamore::prelude::*;
 use wasm_bindgen::prelude::*;
+
+use crate::shell::set_title;
 
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct PostDate {
@@ -112,14 +113,16 @@ pub fn PostView(id: String) -> View {
             crate::shell::NotFound()
         };
     };
+
     // Code highlighting.
     on_mount(highlightAll);
-    use_title(&format!("{} - lukechu", post.front_matter.title));
 
     // TODO: Only import MathJax if needed.
     if post.front_matter.render_math {
         on_mount(move || MathJax().typeset());
     }
+
+    set_title(format!("{} - lukechu", post.front_matter.title));
 
     let components = ComponentMap::new()
         .with("SlideShow", crate::components::slides::SlideShow)
@@ -132,16 +135,18 @@ pub fn PostView(id: String) -> View {
         .with("span", crate::components::math::MathDisplay)
         .with("ShowDate", crate::components::ShowDate);
 
+    // FIXME: issue with upstream sycamore where portal children try to hydrate but cannot
+    // since they are not present in the SSR Html.
     let portal = view! {
-        Portal(selector="head") {
-            (if !post.front_matter.desc.is_empty() {
-                view! {
-                    meta(name="description", content=post.front_matter.desc.clone())
-                }
-            } else {
-                view! {}
-            })
-        }
+        // Portal(selector="head") {
+        //     (if !post.front_matter.desc.is_empty() {
+        //         view! {
+        //             meta(name="description", content=post.front_matter.desc.clone())
+        //         }
+        //     } else {
+        //         view! {}
+        //     })
+        // }
     };
 
     match post.front_matter.layout {

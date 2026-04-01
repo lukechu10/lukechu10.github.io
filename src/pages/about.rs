@@ -1,9 +1,10 @@
 use sycamore::prelude::*;
-use sycamore_hooks::window::use_title;
+
+use crate::shell::set_title;
 
 #[component]
 pub fn About() -> View {
-    use_title("About - lukechu");
+    set_title("About - lukechu");
     view! {
         div(class="post-content max-w-prose mx-auto") {
             h1 { "About" }
