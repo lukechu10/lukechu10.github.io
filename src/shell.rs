@@ -51,12 +51,12 @@ fn Footer() -> View {
     view! {
         footer(class="p-2 bg-slate-900 text-xs font-mono") {
             div(class="flex flex-row justify-between") {
-                div { "© 2025 Luke Chu" }
+                div { "© 2026 Luke Chu" }
                 div(class="text-[9pt]") {
                     "Made with "
                     a(class="hover:underline font-bold text-red-200", href="https://rust-lang.org") { "Rust" }
                     " and "
-                    a(class="hover:underline font-bold text-red-200", href="https://github.com/sycamore-rs/sycamore") { "Sycamore" }
+                    a(class="hover:underline font-bold text-red-200", href="https://sycamore.dev") { "Sycamore" }
                 }
             }
         }
